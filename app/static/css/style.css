@@ -1,0 +1,44 @@
+.contanier{
+    
+    margin: 10px 10px 0px 10px;
+}
+#header{
+    margin-top:-20px;
+    background-color: rgb(66,139,202);
+    height: 70px;
+    
+}
+#title{
+    width: 20%;
+    float: left;
+    border-right: 1px solid white;
+}
+#title h1{
+    padding-left: 10px;
+    padding-top: 5px; 
+    
+}
+#navdropdown{
+    
+    margin-top:20px;
+    float: right
+}
+.dropdown button{
+    height: 50px;
+    border-radius: 0px;
+   
+}
+
+.menu{
+    border-left: 2px solid blue;
+    width: 20%;
+    float: left;
+}
+.content{
+    width: 80%;
+    float:right;
+}
+#addbutton{
+    text-align: right;
+    
+}

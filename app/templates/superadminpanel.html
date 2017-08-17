@@ -1,0 +1,31 @@
+<div>
+    <div id = "header">
+        <div id = "title">
+                <h1>Super Admin</h1>
+        </div>
+        <div id = "navdropdown">
+        <div class="dropdown">
+            <button class="btn btn-primary btn-lg dropdown-toggle" id = "drop_btn" type="button" data-toggle="dropdown">Ime Prezime
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Osobi podaci</a></li>
+                <li><a href="#">Promjeni sifru</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+                </div>
+            </div>
+        </div>
+        <div class = "contanier">
+            <div class = "menu">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href = "#!faculties">Fakulteti</a> </li>
+                <li><a href = "#">Korisnici</a></li>
+               </ul>
+            </div>
+        <div class = "content">
+            <div ng-view></div>
+        </div>
+          
+        </div>
+    </div>

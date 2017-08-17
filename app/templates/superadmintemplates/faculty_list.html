@@ -1,0 +1,27 @@
+<div>
+    <div style="border-left: 2px solid blue;">
+        <table class = "table table-bordered">
+            <tr>
+                <th>Ime fakulteta</th>
+                <th>Država</th>
+                <th>Grad</th>
+                <th>Adresa</th>
+                <th>Broj telefona</th>
+                <th>Kreirano</th>
+            </tr>
+            <tr ng-repeat="faculty in facultyList">
+                <td>{{faculty.name}}</td>
+                <td>{{faculty.country}}</td>
+                <td>{{faculty.city}}</td>
+                <td>{{faculty.address}}</td>
+                <td>{{faculty.phone}}</td>
+                <td>{{faculty.created}}</td>
+            </tr>
+        </table>
+        </div>
+        <div id = "addbutton">
+        <a class="btn btn-primary" href ="#!add">Dodaj Fakultet</a>
+    </div>
+</div>
+
+
