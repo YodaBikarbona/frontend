@@ -10,18 +10,21 @@ issApp.config(function($stateProvider,$urlRouterProvider){
                })
         .state('superadmin',{   //<--- Super Admin
                 url: '/superadmin',
-                templateUrl: 'superadmin.html'
+                templateUrl: 'superadmin.html',
+                controller:'superAdminController'
+                
                })
         .state('list1',{
             parent:'superadmin',
             views:{
                 'superadmin-view@superadmin':{
-                    templateUrl:'superadmin/faculty_list.html'
+                    templateUrl:'superadmin/faculty_list.html',
+                    conntroller:'superAdminFacultylist'
                 }
             }
         })
         .state('addFaculty',{
-            parent:'superadmin',
+           parent:'superadmin',
             views:{
                 'superadmin-view@superadmin':{
                 templateUrl:'superadmin/add_faculty.html'
@@ -51,5 +54,30 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
             $location.path('/superadmin');
         }
     }
-  
 });
+
+issApp.controller('superAdminController' ,function($scope,$http,$rootScope){
+    var facultyList = [];
+    
+    $scope.getListofFaculties = function(){
+           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
+            .then(function(response){
+                $scope.facultyList = response.data.faculty_list;
+            })
+            .catch(function(data){
+               
+           })
+        }
+    
+
+ 
+    
+   
+      
+   
+  
+
+});
+
+
+

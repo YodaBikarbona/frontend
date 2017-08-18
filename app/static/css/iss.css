@@ -102,4 +102,48 @@
     color: white;
 }
 
-/*SUPER ADMIN*/
+/*////////////////// SUPER ADMIN ///////////////////*/
+
+.contanier{
+    
+    margin: 10px 10px 0px 10px;
+}
+#header{
+    
+    background-color: rgb(66,139,202);
+    height: 50px;
+    
+}
+#title{
+    width: 20%;
+    height: 50px;
+    float: left;
+    border-right: 1px solid white;
+}
+#title p{
+    padding: 10px;
+    font-size: 110%;
+    
+}
+#navdropdown{
+    float: right
+}
+.dropdown button{
+    height: 50px;
+    border-radius: 0px;
+   
+}
+
+.menu{
+    border-left: 2px solid blue;
+    width: 20%;
+    float: left;
+}
+.content{
+    width: 80%;
+    float:right;
+}
+#addbutton{
+    text-align: right;}
+
+  

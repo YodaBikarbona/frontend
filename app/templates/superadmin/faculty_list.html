@@ -11,7 +11,7 @@
             </tr>
             <tr ng-repeat="faculty in facultyList">
                 <td>{{faculty.name}}</td>
-                <td>{{faculty.country}}</td>
+                <td>{{faculty.country_name}}</td>
                 <td>{{faculty.city}}</td>
                 <td>{{faculty.address}}</td>
                 <td>{{faculty.phone}}</td>
@@ -20,7 +20,7 @@
         </table>
         </div>
         <div id = "addbutton">
-        <a class="btn btn-primary" href ="#!add">Dodaj Fakultet</a>
+        <a class="btn btn-primary" ui-sref = "addFaculty">Dodaj Fakultet</a>
     </div>
 </div>
 
