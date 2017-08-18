@@ -42,3 +42,17 @@
     text-align: right;
     
 }
+.loginForm{
+    width: 300px;
+    margin:0 auto;
+    border:  1px solid blue;
+}
+#loginImage{
+        height: auto; 
+        width: auto; 
+        max-width: 100px; 
+        max-height: 100px;
+        margin-bottom: 30px; 
+    
+    
+}
