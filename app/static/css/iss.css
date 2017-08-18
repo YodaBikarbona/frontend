@@ -1,0 +1,105 @@
+/*main page css */
+.mainview{
+  /* margin-top: -20px;*/
+}
+
+/*LOGIN PAGE*/
+
+.login-wrapper{
+   /* background-image: url("../images/login/");*/
+    background-repeat: no-repeat;
+    height: auto;
+    padding: 7%;
+   
+}
+#login-form-wrapper{
+    width: 30%;
+    margin: 0px auto;
+    height: 700px;
+    
+    
+}
+#login-image{
+   text-align: center;
+   margin-bottom: -40px;
+}
+#login-image img{
+    width:40%;
+    height: auto;
+}
+#login-form-title{
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    background-color: rgba(0,0,0,0.2);
+}
+#login-form-title h2{
+    
+}
+#login-form{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#login-form form{
+    margin: 0px 15px 25px 25px;
+    border-top: 1px solid black;
+}
+.form-group{
+    margin-bottom: 7%;
+}
+#login-form input[type=text]{
+    background-image: url("../images/login/2-64.png");
+    background-repeat: no-repeat;
+    background-position:3px;
+    background-size: contain;
+    padding-left: 34px;
+}
+#login-form input[type=password]{
+    background-image: url("../images/login/keys-64.png");
+    background-repeat: no-repeat;
+    background-position: 3px;
+    background-size: contain;
+    padding-left: 34px;
+}
+
+.form-group label{
+    margin-bottom: 2%;
+}
+.form-control{
+    border-radius: 0;
+}
+.form-control:focus{
+    border-color: orange;
+    border-width: 2px;
+}
+#submit-button{
+    text-align: center;
+    padding-bottom: 30px;
+    
+}
+#submit-button input{
+    
+   background-color:#428bca;
+    border: none;
+    color: white;
+    padding: 8px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    
+}
+#submit-button input:hover{
+    background-color: #008CBA;
+    color: white;
+}
+
+/*SUPER ADMIN*/
