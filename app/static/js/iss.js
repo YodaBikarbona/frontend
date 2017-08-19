@@ -87,7 +87,7 @@ issApp.controller('superAdminController' ,function($scope,$http){
               
            })
                .catch(function(data){
-                ; 
+                
            });
        }
        
@@ -96,13 +96,30 @@ issApp.controller('superAdminController' ,function($scope,$http){
 
 });
 
-issApp.controller('FacultyListController', function($scope,$http,$rootScope){
+issApp.controller('FacultyListController', function($scope,$http,$state){
      var countries = [];
+    
+    $scope.deleteFaculty = function(id){
+        $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+id+'/delete')
+            .then(function(data){
+            console.log(data);
+        })
+            .catch(function(data){
+            console.log(data);
+        });
+       for(i = 0; i < $scope.facultyList.length; i++){
+           if($scope.facultyList[i].id == id){
+            $scope.facultyList.splice(i,1);
+                
+           }
+       }
+       
+    }
            
-})
+});
 
 issApp.controller('FacultyAddController' ,function($scope,$http,$rootScope){
-   console.log('heyyyy');
+  
   
       $scope.facultyAdd = function(){
            
