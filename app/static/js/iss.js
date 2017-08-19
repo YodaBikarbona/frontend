@@ -19,7 +19,9 @@ issApp.config(function($stateProvider,$urlRouterProvider){
             views:{
                 'superadmin-view@superadmin':{
                     templateUrl:'superadmin/faculty_list.html',
-                    conntroller:'superAdminFacultylist'
+                    controller: 'FacultyListController'
+                    
+                    
                 }
             }
         })
@@ -27,7 +29,8 @@ issApp.config(function($stateProvider,$urlRouterProvider){
            parent:'superadmin',
             views:{
                 'superadmin-view@superadmin':{
-                templateUrl:'superadmin/add_faculty.html'
+                templateUrl:'superadmin/add_faculty.html',
+                    controller: 'FacultyAddController'
                 }
             }
         })
@@ -56,28 +59,67 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
     }
 });
 
-issApp.controller('superAdminController' ,function($scope,$http,$rootScope){
-    var facultyList = [];
+
+     
     
-    $scope.getListofFaculties = function(){
-           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
+  
+    
+
+issApp.controller('superAdminController' ,function($scope,$http){
+   var facultyList = [];
+   var countries = [];
+
+  
+       $scope.getListofFaculties = function(){
+          $http.get('http://localhost:6543/tff_api/v1.0/faculties')
             .then(function(response){
                 $scope.facultyList = response.data.faculty_list;
             })
             .catch(function(data){
                
+           });
+       }
+       
+         $scope.loadCountries = function(){
+           $http.get('http://localhost:6543/tff_api/v1.0/countries')
+                .then(function(response){
+                    $scope.countries = response.data.country_list;
+              
            })
-        }
-    
+               .catch(function(data){
+                ; 
+           });
+       }
+       
+  
 
- 
-    
-   
-      
-   
+
+});
+
+issApp.controller('FacultyListController', function($scope,$http,$rootScope){
+     var countries = [];
+           
+})
+
+issApp.controller('FacultyAddController' ,function($scope,$http,$rootScope){
+   console.log('heyyyy');
+  
+      $scope.facultyAdd = function(){
+           
+          $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
+            .then(function(data){
+               $scope.msg = data.data.message;
+           
+           })
+            .catch(function(data){
+              $scope.msg = data.data.error_msg;  
+              
+           });
+       }
   
 
 });
+
 
 
 

@@ -1,32 +1,36 @@
 <div >
-    <form ng-submit = "addFaculty()">
+    <form ng-submit = "facultyAdd()">
         <div class = "form-group">
             <label for = "name">Naziv Fakulteta</label>
-            <input type ="text" class="form-control" id="name" ng-model = "faculty.name"/>
+            <input type ="text" class="form-control" id="name" ng-model = "f.name"/>
         </div>
         <div class = "form-group">
             <label for = "country">Država</label>
-            <input type ="text" class="form-control" id = "country" ng-model="faculty.country"/>
+            <select class="form-control" id = "country" ng-model="f.country">
+            <option disabled value ="">Odabeir drzavu</option>
+            <option  ng-repeat = "country in countries "value ="{{country.name}}">{{country.name}}</option>
+            </select>
+            
         </div>
         <div class = "form-group">
             <label for = "city">Grad</label>
-            <input type ="text" class="form-control" id = "city" ng-model="faculty.city"/>
+            <input type ="text" class="form-control" id = "city" ng-model="f.city"/>
         </div>
         
         <div class = "form-group">
             <label for = "address">Adresa</label>
-            <input type ="text" class="form-control" id = "address" ng-model="faculty.address"/>
+            <input type ="text" class="form-control" id = "address" ng-model="f.address"/>
         </div>
         
         <div class = "form-group">
             <label for = "phone">Telefon</label>
-            <input type ="text" class="form-control" id = "phone" ng-model="faculty.phone"/>
+            <input type ="text" class="form-control" id = "phone" ng-model="f.phone"/>
         </div>
         <div style="text-align: center">
             <input type ="submit" value = "Dodaj" class = "btn btn-default"/>
         </div>
      </form>
     <div>
-        <p>{{statusMessage}}</p>
+        <p>{{msg}}</p> 
     </div>
 </div>

@@ -6,10 +6,11 @@
 /*LOGIN PAGE*/
 
 .login-wrapper{
-   /* background-image: url("../images/login/");*/
+    background-color: #ffc973;
     background-repeat: no-repeat;
     height: auto;
     padding: 7%;
+    color: #428bca;
    
 }
 #login-form-wrapper{
@@ -39,6 +40,7 @@
     
 }
 #login-form{
+    
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: rgba(0,0,0,0.2);
@@ -46,9 +48,9 @@
 
 #login-form form{
     margin: 0px 15px 25px 25px;
-    border-top: 1px solid black;
+    border-top: 1px solid #428bca;
 }
-.form-group{
+.login-input-block{
     margin-bottom: 7%;
 }
 #login-form input[type=text]{
@@ -66,14 +68,14 @@
     padding-left: 34px;
 }
 
-.form-group label{
+#login-form label{
     margin-bottom: 2%;
 }
 .form-control{
-    border-radius: 0;
+    border-radius: 4px;
 }
 .form-control:focus{
-    border-color: orange;
+   
     border-width: 2px;
 }
 #submit-button{
