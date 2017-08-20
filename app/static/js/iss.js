@@ -13,27 +13,8 @@ issApp.config(function($stateProvider,$urlRouterProvider){
                 templateUrl: 'superadmin.html',
                 controller:'superAdminController'
                 
-               })
-        .state('list1',{
-            parent:'superadmin',
-            views:{
-                'superadmin-view@superadmin':{
-                    templateUrl:'superadmin/faculty_list.html',
-                    controller: 'FacultyListController'
-                    
-                    
-                }
-            }
-        })
-        .state('addFaculty',{
-           parent:'superadmin',
-            views:{
-                'superadmin-view@superadmin':{
-                templateUrl:'superadmin/add_faculty.html',
-                    controller: 'FacultyAddController'
-                }
-            }
-        })
+               });
+       
     
     $urlRouterProvider.otherwise('/');
     
@@ -66,11 +47,13 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
     
 
 issApp.controller('superAdminController' ,function($scope,$http){
-   var facultyList = [];
-   var countries = [];
-
-  
-       $scope.getListofFaculties = function(){
+   
+    var facultyList = [];
+    var countries = [];
+    $scope.f ={};
+    var deleteFacultyId = null;
+    
+    $scope.getListofFaculties = function(){
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
             .then(function(response){
                 $scope.facultyList = response.data.faculty_list;
@@ -84,58 +67,52 @@ issApp.controller('superAdminController' ,function($scope,$http){
            $http.get('http://localhost:6543/tff_api/v1.0/countries')
                 .then(function(response){
                     $scope.countries = response.data.country_list;
+                  
               
            })
                .catch(function(data){
                 
            });
        }
+         $scope.setFacultydeleteId = function(id){
+                deleteFacultyId = id;
+            
+         }
        
-  
-
-
-});
-
-issApp.controller('FacultyListController', function($scope,$http,$state){
-     var countries = [];
-    
-    $scope.deleteFaculty = function(id){
-        $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+id+'/delete')
-            .then(function(data){
-            console.log(data);
-        })
-            .catch(function(data){
-            console.log(data);
-        });
-       for(i = 0; i < $scope.facultyList.length; i++){
-           if($scope.facultyList[i].id == id){
-            $scope.facultyList.splice(i,1);
-                
-           }
-       }
-       
-    }
+          $scope.deleteFaculty = function(){
+               if(deleteFacultyId!=null){
+                      $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+deleteFacultyId+'/delete')
+                        .then(function(data){
+                            deleteFacultyId = null;
+                      })
+                          .catch(function(data){
+                         console.log(data);
+                      });
+                        for(i = 0; i < $scope.facultyList.length; i++){
+                            if($scope.facultyList[i].id == deleteFacultyId){
+                                $scope.facultyList.splice(i,1);
+                            }
+                        }
+                    }
+         
+                }
            
-});
-
-issApp.controller('FacultyAddController' ,function($scope,$http,$rootScope){
-  
-  
-      $scope.facultyAdd = function(){
+          $scope.facultyAdd = function(){
            
-          $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
-            .then(function(data){
-               $scope.msg = data.data.message;
+            $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
+                .then(function(data){
+                    $scope.msg = data.data.message;
            
-           })
-            .catch(function(data){
-              $scope.msg = data.data.error_msg;  
+                })
+                .catch(function(data){
+                    $scope.msg = data.data.error_msg;  
               
-           });
+            });
        }
   
+  });
 
-});
+
 
 
 
