@@ -51,7 +51,7 @@
                                 <td>
                                     <a class = "btn btn-warning btn-xs" id ="up">
                                         <i class="fa fa-bars" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger btn-xs delete-button-prompt"   ng-click="setFacultydeleteId(faculty.id)" data-toggle="collapse" data-target="#demo">
+                                    <a class="btn btn-danger btn-xs delete-button-prompt"   ng-click="setFacultydeleteId(faculty.id)" id = "show_delete-comfirm">
                                         <i class="fa fa-times" aria-hidden="true"></i></a>
                                   </td>
                             </tr>
@@ -61,11 +61,11 @@
                              <a href ="" id = "open-add-faculty-form" class="btn btn-primary " ng-click = "loadCountries()">
                                  <i class="fa fa-plus" aria-hidden="true"></i></a> <!-- PLUS BUTTON -->
                          </div>
-                            <div id="demo" class="collapse" style =" position:absolute;left: 50%;
-    top: 20%; z-index: 0; border: 2px solid #d9534f; border-radius: 5px; width:200px; background-color: white" >
+                            <div id="delete-prompt" style =" position:absolute;left: 50%;
+    top: 20%; z-index: 0; border: 2px solid #d9534f; border-radius: 5px; width:200px; background-color: white; display:none" >
                                 <div style="background-color: #d9534f; padding: 5px; text-align: left;">X</div>
                                 <div style="padding:10px; "><strong>Dali se sigurni da želite obrisati fakultet!!!</strong></div>
-                                <div style = "text-align: center; padding-bottom: 5px;"><a class = "btn btn-danger" toggle="collapse" data-target="#demo"  ng-click = "deleteFaculty()">Obriši</a></div> 
+                                <div style = "text-align: center; padding-bottom: 5px;"><a class = "btn btn-danger" ng-click = "deleteFaculty()" id ="hide-delete-prompt">Obriši</a></div> 
                             </div>
                                 
                             <script>
@@ -89,7 +89,7 @@
                                             } 
                                         }
                                     }
-
+                                   
                                  </script>
                         
                  </div> <!-- END OF FACULTY LIST -->
@@ -158,6 +158,14 @@
                      $("#add-faculty-form").fadeIn();
                  }
                 });
+              
+                
+                $("#hide-delete-prompt").click(function(){
+                    $("#delete-prompt").fadeOut();
+                });
+                $(document).on("click",'#myTable .delete-button-prompt',function(){
+                        $("#delete-prompt").fadeIn();
+                    });
              
             });
             

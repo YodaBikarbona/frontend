@@ -46,7 +46,7 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
   
     
 
-issApp.controller('superAdminController' ,function($scope,$http){
+issApp.controller('superAdminController' ,function($scope,$http,$state){
    
     var facultyList = [];
     var countries = [];
@@ -84,6 +84,7 @@ issApp.controller('superAdminController' ,function($scope,$http){
                       $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+deleteFacultyId+'/delete')
                         .then(function(data){
                             deleteFacultyId = null;
+                            
                       })
                           .catch(function(data){
                          console.log(data);
