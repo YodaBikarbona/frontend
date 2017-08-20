@@ -27,7 +27,7 @@
             
                  <div id = 'faculty-info-content' style="display: none"> <!--BEGINING OF FACULTY LIST -->
                    
-                             <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pretrazi ime fakulteta">
+                             <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Pretrazi ime fakulteta">
                         
                      
                      <div style="border-left: 2px solid blue;">
@@ -49,7 +49,7 @@
                                 <td>{{faculty.phone}}</td>
                                 <td>{{faculty.created}}</td>
                                 <td>
-                                    <a class = "btn btn-warning btn-xs" id ="up">
+                                    <a class = "btn btn-warning btn-xs" id ="up" ng-click = getFacultybyId(faculty.id)>
                                         <i class="fa fa-bars" aria-hidden="true"></i></a>
                                     <a class="btn btn-danger btn-xs delete-button-prompt"   ng-click="setFacultydeleteId(faculty.id)" id = "show_delete-comfirm">
                                         <i class="fa fa-times" aria-hidden="true"></i></a>
@@ -98,13 +98,14 @@
                     <form ng-submit = "facultyAdd()">
                         <div class = "form-group">
                             <label for = "name">Naziv Fakulteta</label>
-                            <input type ="text" class="form-control" id="name" ng-model = "f.name"/>
+                            <input type ="text" class="form-control" id="name" ng-model = "f.name" />
                         </div>
                         <div class = "form-group">
                             <label for = "country">Država</label>
                             <select class="form-control" id = "country" ng-model="f.country">
-                            <option disabled value ="">Odabeir drzavu</option>
-                            <option  ng-repeat = "country in countries "value ="{{country.name}}">{{country.name}}</option>
+                                <option disabled value ="">Odaberi državu</option>
+                                <option  ng-repeat = "country in countries"value ="{{country.name}}">{{country.name}}</option>
+                                
                             </select>
 
                         </div>
@@ -127,6 +128,7 @@
                         </div>
                      </form>
                     <div>
+                        <pre>{{f | json}}</pre>
                         <p>{{msg}}</p> 
                     </div>
                         

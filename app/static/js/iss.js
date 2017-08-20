@@ -46,7 +46,7 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
   
     
 
-issApp.controller('superAdminController' ,function($scope,$http,$state){
+issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScope){
    
     var facultyList = [];
     var countries = [];
@@ -106,10 +106,23 @@ issApp.controller('superAdminController' ,function($scope,$http,$state){
            
                 })
                 .catch(function(data){
-                    $scope.msg = data.data.error_msg;  
+                   $scope.msg = data.data.error_msg;  
+                    
               
             });
        }
+          $scope.getFacultybyId = function(id){
+                $http.get("http://localhost:6543/tff_api/v1.0/faculty/"+id)
+                        .then(function(response){
+                            $scope.f = response.data.faculty_dict;
+                            
+                        
+                }).catch(function(data){
+                    console.log(data);
+                })
+              
+              
+          }
   
   });
 
