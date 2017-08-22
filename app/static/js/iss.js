@@ -53,6 +53,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
     $scope.f ={};
     var deleteFacultyId = null;
     
+    
     $scope.getListofFaculties = function(){
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
             .then(function(response){
@@ -67,7 +68,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
            $http.get('http://localhost:6543/tff_api/v1.0/countries')
                 .then(function(response){
                     $scope.countries = response.data.country_list;
-                  
+                 
               
            })
                .catch(function(data){
@@ -97,35 +98,48 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                     }
          
                 }
-           
-          $scope.facultyAdd = function(){
-           
-            $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
-                .then(function(data){
-                    $scope.msg = data.data.message;
-           
-                })
-                .catch(function(data){
-                   $scope.msg = data.data.error_msg;  
-                    
-              
-            });
-       }
+       
           $scope.getFacultybyId = function(id){
                 $http.get("http://localhost:6543/tff_api/v1.0/faculty/"+id)
                         .then(function(response){
-                            $scope.f = response.data.faculty_dict;
+                            $scope.facultyUpdate = response.data.faculty_dict;
+                            $scope.loadCountries()
                             
-                        
-                }).catch(function(data){
+                    }).catch(function(data){
                     console.log(data);
-                })
+                });
               
-              
-          }
-  
-  });
+            }
+           $scope.updateFaculty = function(id){
 
+                $http.post("http://localhost:6543/tff_api/v1.0/faculty/"+id+"/edit", $scope.facultyUpdate)
+                    .then(function(data){
+                        console.log(data);
+                    }).catch(function(data){
+                        console.log(data);
+                    });
+                 
+            }
+
+
+            $scope.facultyAdd = function(){
+                
+                 $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
+                     .then(function(data){
+                        ;
+                         $scope.msg = data.data.message;
+                
+                     })
+                     .catch(function(data){
+                        $scope.msg = data.data.error_msg;  
+                        console.log(data);
+                   
+                 });
+            }
+
+            
+        
+    });
 
 
 
