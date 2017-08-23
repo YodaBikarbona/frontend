@@ -72,7 +72,7 @@
                                     <input type="text" ng-model = "facultyUpdate.name"/>
                                     <select ng-model="facultyUpdate.country">
                                        
-                                        <option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}<option>
+                                        <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}<option>
                                     </select>
                                     <input type="text" ng-model = "facultyUpdate.city" />
                                     <input type="text" ng-model = "facultyUpdate.address"/>
@@ -94,7 +94,7 @@
                             <label for = "country">Država</label>
                             <select class="form-control" id = "country" ng-model="f.country">
                                 <option disabled value ="">Odaberi državu</option>
-                                <option  ng-repeat = "country in countries" value ="{{country.name}}">{{country.name}}</option>
+                                <option  ng-repeat = "country in countries" value ="{{country.code}}">{{country.name}}</option>
                             </select> 
                         </div>
                         <div class = "form-group">
