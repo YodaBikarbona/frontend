@@ -12,47 +12,30 @@ issApp.config(function($stateProvider,$urlRouterProvider){
                 url: '/superadmin',
                 templateUrl: 'superadmin.html',
                 controller:'superAdminController'
-                
-               });
-       
-    
-    $urlRouterProvider.otherwise('/');
-    
-});
-
-
-
+                });
+       $urlRouterProvider.otherwise('/');
+    });
 
 issApp.controller('mainController',function($scope,$rootScope){
     $rootScope.logedIn = false;
     
-});
+    });
 
 issApp.controller('loginController',function($scope,$location,$rootScope){
-    
-    $scope.login = function(){
+        $scope.login = function(){
         var email = $scope.mail;
-        
-        if(email == 'veca'){
-            $rootScope.logedIn = true;
-            $location.path('/superadmin');
-        }
-    }
-});
-
-
-     
-    
-  
-    
+            if(email == 'veca'){
+                $rootScope.logedIn = true;
+                $location.path('/superadmin');
+            }
+         }
+    });
 
 issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScope){
    
-    var facultyList = [];
-    var countries = [];
-    $scope.f ={};
+    var facultiListindex = null;
     var deleteFacultyId = null;
-    
+    $scope.countries;
     
     $scope.getListofFaculties = function(){
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
@@ -60,86 +43,77 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                 $scope.facultyList = response.data.faculty_list;
             })
             .catch(function(data){
-               
-           });
+               });
        }
        
-         $scope.loadCountries = function(){
-           $http.get('http://localhost:6543/tff_api/v1.0/countries')
+    $scope.loadCountries = function(){
+        $http.get('http://localhost:6543/tff_api/v1.0/countries')
                 .then(function(response){
                     $scope.countries = response.data.country_list;
-                 
-              
-           })
+                 })
                .catch(function(data){
-                
-           });
-       }
-         $scope.setFacultydeleteId = function(id){
+                });
+            }
+         $scope.setFacultydeleteId = function(id,index){
                 deleteFacultyId = id;
-            
-         }
-       
-          $scope.deleteFaculty = function(){
-               if(deleteFacultyId!=null){
-                      $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+deleteFacultyId+'/delete')
-                        .then(function(data){
-                            deleteFacultyId = null;
-                            
+                setListIndex(index);
+            }
+        function setListIndex(index){
+                facultiListindex = index;
+            }
+        
+        $scope.deleteFaculty = function(){
+            if(deleteFacultyId!=null){
+                $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+deleteFacultyId+'/delete')
+                    .then(function(data){
+                        $scope.facultyList.splice(facultiListindex,1);
+                        deleteFacultyId = null;
+                        facultiListindex = null;
                       })
-                          .catch(function(data){
-                         console.log(data);
+                        .catch(function(data){
+                            deleteFacultyId = null;
+                            facultiListindex = null;
                       });
-                        for(i = 0; i < $scope.facultyList.length; i++){
-                            if($scope.facultyList[i].id == deleteFacultyId){
-                                $scope.facultyList.splice(i,1);
-                            }
-                        }
-                    }
-         
                 }
-       
-          $scope.getFacultybyId = function(id){
+            }
+            $scope.getFacultybyId = function(id,index){
                 $http.get("http://localhost:6543/tff_api/v1.0/faculty/"+id)
                         .then(function(response){
                             $scope.facultyUpdate = response.data.faculty_dict;
                             $scope.loadCountries()
-                            
-                    }).catch(function(data){
-                    console.log(data);
-                });
+                            setListIndex(index);
+                        }).catch(function(data){
+                    });
               
             }
            $scope.updateFaculty = function(id){
-
                 $http.post("http://localhost:6543/tff_api/v1.0/faculty/"+id+"/edit", $scope.facultyUpdate)
                     .then(function(data){
-                        console.log(data);
-                    }).catch(function(data){
-                        console.log(data);
-                    });
-                 
-            }
-
-
+                        var country;
+                        for(var i = 0; i < $scope.countries.length; i++){
+                            if($scope.countries[i].code == $scope.facultyUpdate.country){
+                                country = $scope.countries[i].name;
+                               
+                            }
+                        } 
+                        $scope.facultyList[facultiListindex] = $scope.facultyUpdate;
+                        $scope.facultyList[facultiListindex].country_name = country;
+                        setListIndex(null);
+                    })
+                    .catch(function(data){
+                     });
+                }
             $scope.facultyAdd = function(){
-                
-                 $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
+                $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
                      .then(function(data){
-                        ;
-                         $scope.msg = data.data.message;
-                
-                     })
+                        $scope.msg = data.data.message;
+                    })
                      .catch(function(data){
                         $scope.msg = data.data.error_msg;  
                         console.log(data);
-                   
-                 });
-            }
-
-            
-        
-    });
+                   });
+                }
+        });
 
 
 

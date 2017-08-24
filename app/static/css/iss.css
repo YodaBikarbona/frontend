@@ -1,4 +1,5 @@
 /*main page css */
+
 .mainview{
   /* margin-top: -20px;*/
 
@@ -138,15 +139,57 @@
 }
 
 .menu{
-    border-left: 2px solid blue;
-    width: 20%;
+    border-left: 2px solid #428bca;
+    border-right: 2px solid #428bca;
+    width: 10%;
     float: left;
 }
 .content{
-    width: 80%;
+    width: 90%;
     float:right;
+    
 }
 #addbutton{
-    text-align: right;}
+    text-align: right;
+}
+#delete-prompt{
+    position: absolute;
+    display:none;
+    left: 30%;
+    top: 15%; 
+    z-index: 0; 
+    border: 2px solid #d9534f; 
+    border-radius: 5px; 
+    width:40%; 
+    background-color: white; 
+}
+
+#update-form{
+    display:none;
+    position:absolute;
+    left:30%;
+    top:15%;
+    width: 50%;
+    z-index:0; 
+    border: 2px solid #5bc0de; 
+    border-radius:5px; 
+    background-color:white;
+
+}
+#update-form form{
+    padding: 5px;
+}
+
+#add-faculty-form{
+    display: none;
+    border-left: 2px solid #5cb85c;
+    
+}
+#faculty-add-form{
+    width:70%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #5cb85c;
+}
 
   

@@ -1,175 +1,243 @@
 <div>
-    <div id = "header">
-        <div id = "title">
-                <p>Super Admin</p>
+
+    <div id="header">
+        <div id="title">
+            <p>Super Admin</p>
         </div>
-        <div id = "navdropdown">
-        <div class="dropdown">
-            <button class="btn btn-primary btn-lg dropdown-toggle" id = "drop_btn" type="button" data-toggle="dropdown">Ime Prezime
+        <div id="navdropdown">
+            <div class="dropdown">
+                <button class="btn btn-primary btn-lg dropdown-toggle" id="drop_btn" type="button" data-toggle="dropdown">Ime Prezime
             <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="#">Osobi podaci</a></li>
-                <li><a href="#">Promjeni sifru</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-                </div>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Osobi podaci</a></li>
+                    <li><a href="#">Promjeni sifru</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
             </div>
         </div>
-        <div class = "contanier">
-            <div class = "menu">
+    </div>
+    <div class="contanier">
+        <div class="menu">
             <ul class="nav nav-pills nav-stacked">
-                <li><a href = "" id = "show-list-of-faculties" ng-click="getListofFaculties()">Fakulteti <i class="fa fa-university" aria-hidden="true"></i></a></li>
-                <li><a >Korisnici</a></li>
-               </ul>
-            </div>
-             <div class = "content">
-            
-                 <div id = 'faculty-info-content' style="display: none"> <!--BEGINING OF FACULTY LIST -->
-                   
-                             <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Pretrazi ime fakulteta">
-                        
-                     
-                     <div style="border-left: 2px solid blue;">
-                        <table class = "table table-bordered" id = "myTable">
-                            <tr>
-                                <th>Ime fakulteta</th>
-                                <th>Država</th>
-                                <th>Grad</th>
-                                <th>Adresa</th>
-                                <th>Broj telefona</th>
-                                <th>Kreirano</th>
-                                <th>Opcije</th>
-                            </tr>
-                            <tr ng-repeat="faculty in facultyList">
-                                <td>{{faculty.name}}</td>
-                                <td>{{faculty.country_name}}</td>
-                                <td>{{faculty.city}}</td>
-                                <td>{{faculty.address}}</td>
-                                <td>{{faculty.phone}}</td>
-                                <td>{{faculty.created}}</td>
-                                <td>
-                                    <a class = "btn btn-warning btn-xs" id ="update-button" ng-click = getFacultybyId(faculty.id)>
+                <li><a href="" id="show-list-of-faculties" ng-click="getListofFaculties()"><i class="fa fa-university" aria-hidden="true"></i> Fakulteti</a></li>
+                <li><a>Korisnici</a></li>
+            </ul>
+        </div>
+        <div class="content">
+
+            <div id='faculty-info-content' style="display: none">
+                <!--BEGINING OF FACULTY LIST -->
+
+                <!-- <input type="text" id="myInput" onkeyup="myFunction()"  placeholder="Pretrazi ime fakulteta"> -->
+
+
+                <div >
+                    <table class="table table-bordered" style="border-left: 2px solid #428bca;" id="myTable">
+                        <tr>
+                            <th>Ime fakulteta</th>
+                            <th>Država</th>
+                            <th>Grad</th>
+                            <th>Adresa</th>
+                            <th>Broj telefona</th>
+                            <th>Kreirano</th>
+                            <th>Opcije</th>
+                        </tr>
+                        <tr ng-repeat="faculty in facultyList">
+                            <td>{{faculty.name}}</td>
+                            <td>{{faculty.country_name}}</td>
+                            <td>{{faculty.city}}</td>
+                            <td>{{faculty.address}}</td>
+                            <td>{{faculty.phone}}</td>
+                            <td>{{faculty.created}}</td>
+                            <td>
+                                <a class="btn btn-warning btn-xs" id="update-button" ng-click="getFacultybyId(faculty.id,$index)">
                                         <i class="fa fa-bars" aria-hidden="true"></i></a>
-                                    <a class="btn btn-danger btn-xs delete-button-prompt"   ng-click="setFacultydeleteId(faculty.id)" id = "show_delete-comfirm">
+                                <a class="btn btn-danger btn-xs delete-button-prompt" ng-click="setFacultydeleteId(faculty.id,$index)" id="show_delete-comfirm">
                                         <i class="fa fa-times" aria-hidden="true"></i></a>
-                                  </td>
-                            </tr>
-                        </table>
-                    </div>
-                     <div id = "addbutton">
-                             <a href ="" id = "open-add-faculty-form" class="btn btn-primary " ng-click = "loadCountries()">
-                                 <i class="fa fa-plus" aria-hidden="true"></i></a> <!-- PLUS BUTTON -->
-                         </div>
-                            <div id="delete-prompt" style =" position:absolute;left: 50%;
-    top: 20%; z-index: 0; border: 2px solid #d9534f; border-radius: 5px; width:200px; background-color: white; display:none" >
-                                <div style="background-color: #d9534f; padding: 5px; text-align: left;">X</div>
-                                <div style="padding:10px; "><strong>Dali se sigurni da želite obrisati fakultet!!!</strong></div>
-                                <div style = "text-align: center; padding-bottom: 5px;"><a class = "btn btn-danger" ng-click = "deleteFaculty()" id ="hide-delete-prompt">Obriši</a></div> 
-                            </div>
-                            <div id = "update-form" style="display:none">
-                                <form ng-submit="updateFaculty(facultyUpdate.id)">
-                                    <input type="text" ng-model = "facultyUpdate.name"/>
-                                    <select ng-model="facultyUpdate.country">
-                                       
-                                        <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}<option>
-                                    </select>
-                                    <input type="text" ng-model = "facultyUpdate.city" />
-                                    <input type="text" ng-model = "facultyUpdate.address"/>
-                                    <input type="text" ng-model = "facultyUpdate.phone" />
-                                    <input type = "submit" />
-                                </form>
-                                  <pre>{{facultyUpdate | json}}
-                            </div>
-                            
-                    </div> <!-- END OF FACULTY LIST -->
-                
-                 <div id = "add-faculty-form" style="display: none" > <!--BEGINING OF FACULYT ADD FORM -->
-                    <form ng-submit = "facultyAdd()" onvlidate = "novalidate" >
-                        <div class = "form-group">
-                            <label for = "name">Naziv Fakulteta</label>
-                            <input type ="text" class="form-control" id="name" ng-model = "f.name" /> 
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="addbutton">
+                            <a href="" id="open-add-faculty-form" class="btn btn-success " ng-click="loadCountries()">
+                                         <i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <!-- PLUS BUTTON -->
                         </div>
-                        <div class = "form-group">
-                            <label for = "country">Država</label>
-                            <select class="form-control" id = "country" ng-model="f.country">
+                </div>
+              
+                <div id="delete-prompt">
+                    <div style="background-color: #d9534f; padding: 4px;">
+                        <div style="text-align:right"><a id="exit-delete-prompt"><i class="fa fa-times" style="color:black" aria-hidden="true"></i></a>
+                        </div>
+                        <strong>Obriši fakultet</strong>
+                    </div>
+                    <div style="padding:10px; "><strong>Dali ste sigurni da želite obrisati fakultet!!!</strong></div>
+                    <div style="text-align: center; padding-bottom: 10px;"><a class="btn btn-danger" ng-click="deleteFaculty()" id="hide-delete-prompt">Obriši</a></div>
+                </div>
+
+                <div id="update-form">
+                    <!-- BEGIN OF UPDATE FORM -->
+                    <div style="background-color:#5bc0de;padding:5px;">
+                        <div style="text-align:right"><a id="exit-update-form"><i class="fa fa-times" aria-hidden="true"></i></a></div>
+                        <h3>
+                            <p>Izmjeni podatke</p>
+                        </h3>
+                    </div>
+                    <div>
+                        <form ng-submit="updateFaculty(facultyUpdate.id)">
+                            <div class="form-group">
+                                <strong>Ime fakulteta</strong>
+                                <input type="text" class="form-control" ng-model="facultyUpdate.name" />
+                            </div>
+                            <div class="form-group">
+                                <strong>Država</strong>
+                                <select class="form-control" ng-model="facultyUpdate.country">
+                                            <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}<option>
+                                         </select>
+                            </div>
+                            <div class="form-group">
+                                <strong>Grad</strong>
+                                <input type="text" class="form-control" ng-model="facultyUpdate.city" />
+                            </div class="form-group">
+                            <div class="form-group">
+                                <strong> Adresa</strong>
+                                <input type="text" class="form-control" ng-model="facultyUpdate.address" />
+                            </div>
+                            <div class="form-group">
+                                <strong>Telefon</strong>
+                                <input type="text" class="form-control" ng-model="facultyUpdate.phone" />
+                            </div>
+                            <div style="text-align:center">
+                                <input type="submit" value="Update" class="btn btn-info" id="exit-update-form-summit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END OF UPDATE FORM -->
+
+            </div>
+            <!-- END OF FACULTY LIST -->
+
+            <div id="add-faculty-form"> <!--BEGINING OF FACULYT ADD FORM -->
+                <div style = "text-align:center; background-color:#5cb85c; padding:5px;">
+                        <h3>UNESITE PODATKE O FAKULTETU</h3>
+                    </div>
+              
+            <div id = "faculty-add-form"> 
+                <form ng-submit="facultyAdd()" onvlidate="novalidate">
+                    <div class="form-group">
+                        <label for="name">Naziv Fakulteta</label>
+                        <input type="text" class="form-control" id="name" ng-model="f.name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Država</label>
+                        <select class="form-control" id="country" ng-model="f.country">
                                 <option disabled value ="">Odaberi državu</option>
                                 <option  ng-repeat = "country in countries" value ="{{country.code}}">{{country.name}}</option>
-                            </select> 
-                        </div>
-                        <div class = "form-group">
-                            <label for = "city">Grad</label>
-                            <input type ="text" class="form-control" id = "city" ng-model="f.city"/>
-                        </div>
-
-                        <div class = "form-group">
-                            <label for = "address">Adresa</label>
-                            <input type ="text" class="form-control" id = "address" ng-model="f.address"/>
-                        </div>
-
-                        <div class = "form-group">
-                            <label for = "phone">Telefon</label>
-                            <input type ="text" class="form-control" id = "phone" ng-model="f.phone"/>
-                        </div>
-                        <div style="text-align: center">
-                            <input type ="submit" value = "Dodaj" class = "btn btn-default"/>
-                           
-                            
-                        </div>
-                     </form>
-                     
-                    <div>
-                        <pre>{{f | json}}</pre>
-                        <p>{{msg}}</p> 
+                            </select>
                     </div>
-                        
-                 </div> <!--END OF FACULTY ADD FORM -->
-                 
-            </div> <!-- END OF CONTENT --> 
-                   
-        </div> <!-- END OF CONTANIER --> 
+                    <div class="form-group">
+                        <label for="city">Grad</label>
+                        <input type="text" class="form-control" id="city" ng-model="f.city" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Adresa</label>
+                        <input type="text" class="form-control" id="address" ng-model="f.address" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="text" class="form-control" id="phone" ng-model="f.phone" />
+                    </div>
+                    <div style="text-align: center">
+                        <input type="submit" value="Dodaj" class="btn btn-success" />
+                    </div>
+                </form>
+                <div style = "text-align:center; margin-top:5px;">
+                        <p>{{msg}}</p>
+                    </div>
+            </div> 
+               
+
+            </div>
+            <!--END OF FACULTY ADD FORM -->
+
+        </div>
+        <!-- END OF CONTENT -->
+
+    </div>
+    <!-- END OF CONTANIER -->
     <script>
         /* **** SHOW LIST OF FACULTIES BUTTON **** */
-         $(document).ready(function(){
-           $("#show-list-of-faculties").click(function(){
-                 if($("#faculty-info-content").css("display") == "block"){
-                   $("#faculty-info-content").fadeOut();
-               }
-                if($("#faculty-info-content").css("display") == "none"){
-                   $("#faculty-info-content").fadeIn();
-                        }
-                if($("#add-faculty-form").css("display") == "block"){
+        $(document).ready(function () {
+            $("#show-list-of-faculties").click(function () {
+                if ($("#faculty-info-content").css("display") == "block") {
+                    $("#faculty-info-content").fadeOut();
+                }
+                if ($("#faculty-info-content").css("display") == "none") {
+                    $("#faculty-info-content").fadeIn();
+                }
+                if ($("#add-faculty-form").css("display") == "block") {
                     $("#faculty-info-content").fadeIn();
                     $("#add-faculty-form").hide();
                 }
-             
+                if ($("#delete-prompt").css("display") == 'block') {
+                    $("#delete-prompt").hide();
+                }
+                if ($("#update-form").css("display") == 'block') {
+                    $("#update-form").hide();
+                }
+
             });
-             $("#open-add-faculty-form").click(function(){
-                
-                 if($("#add-faculty-form").css("display") == "none"){
-                     $("#faculty-info-content").hide();
-                     $("#add-faculty-form").fadeIn();
-                 }
-                });
-              
-                
-                $("#hide-delete-prompt").click(function(){
+            $("#open-add-faculty-form").click(function () {
+
+                if ($("#add-faculty-form").css("display") == "none") {
+                    $("#faculty-info-content").hide();
+                    $("#add-faculty-form").fadeIn();
+                }
+                if ($("#delete-prompt").css("display") == 'block') {
+                    $("#delete-prompt").hide();
+                }
+                if ($("#update-form").css("display") == 'block') {
+                    $("#update-form").hide();
+                }
+            });
+
+
+            $("#hide-delete-prompt").click(function () {
+                $("#delete-prompt").fadeOut();
+            });
+
+            $(document).on("click", '#myTable .delete-button-prompt', function () {
+                if ($("#update-form").css("display") == 'block') {
+                    $("#update-form").fadeOut();
+                }
+                $("#delete-prompt").fadeIn();
+            });
+
+            $("#exit-delete-prompt").click(function () {
+                $("#delete-prompt").fadeOut();
+            })
+
+
+            $(document).on("click", "#myTable #update-button", function () {
+                if ($("#delete-prompt").css("display") == 'block') {
                     $("#delete-prompt").fadeOut();
-                });
-                $(document).on("click",'#myTable .delete-button-prompt',function(){
-                        $("#delete-prompt").fadeIn();
-                    });
-                $(document).on("click", "#myTable #update-button", function(){
-                    $("#update-form").fadeIn();
-                    
-                });
+                }
+                $("#update-form").fadeIn();
+
             });
-            
-    
-    
+            $("#exit-update-form").click(function () {
+                $("#update-form").fadeOut();
+            });
+            $("#exit-update-form-summit").click(function () {
+                $("#update-form").fadeOut();
+            })
+        });
     </script>
 
-<script>
+    <!-- <script>
     //search bar
     function myFunction() {
         var input, filter, table, tr, td, i;
@@ -192,5 +260,5 @@
         }
        
      </script>
-    
+ -->
 </div>
