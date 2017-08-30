@@ -1,4 +1,28 @@
-var issApp = angular.module('issApp', ['ui.router']);
+var issApp = angular.module('issApp', ['ui.router','jcs-autoValidate']);
+
+
+issApp.run(function(defaultErrorMessageResolver){
+    defaultErrorMessageResolver.getErrorMessages().then(function(errorMesages){
+        errorMesages['requiredMessage'] = "Ovo polje je obavezno";
+
+        errorMesages['invalidFacultyname'] = "Naziv Fakulteta može sadržavati slova i brojeve";
+        errorMesages['invalidFacultyminlength'] = "Naziv fakulteta mora sadžavati bar dva znaka";
+        errorMesages['invalidFacultymaxlength'] = "Naziv fakulteta ne može biti preko 40 znakova";
+       
+        errorMesages['invalidCity'] = "Naziv grada može sadržavati slova i brojeve";
+        errorMesages['invalidCityminlength'] = "Naziv grada mora sadžavati bar dva znaka";
+        errorMesages['invalidCitymaxlength'] = "Naziv grada ne može biti preko 30 znakova";
+
+        errorMesages['invalidAddress'] = "Adresa može sadržavati slova brojeve i _";
+        errorMesages['invalidAddressminlength'] = "Adresa mora sadžavati bar dva znaka";
+        errorMesages['invalidAddressmaxlength'] = "Adresa ne može biti preko 40 znakova";
+
+        errorMesages['invalidPhone'] = "Telefon može sadržavati samo brojeve";
+        errorMesages['invalidPhoneminlength'] = "Telefon mora imati barem 6 brojeva";
+        errorMesages['invalidPhonemaxlength'] = "Telefon ne može imati više od 20 brojeva";
+    });
+});
+
 
 issApp.config(function($stateProvider,$urlRouterProvider){
     //RUTE
@@ -36,6 +60,8 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
     var facultiListindex = null;
     var deleteFacultyId = null;
     $scope.countries;
+    $scope.newFaculty;
+    
     
     $scope.getListofFaculties = function(){
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
@@ -80,7 +106,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                 $http.get("http://localhost:6543/tff_api/v1.0/faculty/"+id)
                         .then(function(response){
                             $scope.facultyUpdate = response.data.faculty_dict;
-                            $scope.loadCountries()
+                            $scope.loadCountries();
                             setListIndex(index);
                         }).catch(function(data){
                     });
@@ -90,32 +116,40 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                 $http.post("http://localhost:6543/tff_api/v1.0/faculty/"+id+"/edit", $scope.facultyUpdate)
                     .then(function(data){
                         var country;
-                        for(var i = 0; i < $scope.countries.length; i++){
-                            if($scope.countries[i].code == $scope.facultyUpdate.country){
-                                country = $scope.countries[i].name;
-                               
-                            }
-                        } 
                         $scope.facultyList[facultiListindex] = $scope.facultyUpdate;
-                        $scope.facultyList[facultiListindex].country_name = country;
+                        $scope.facultyList[facultiListindex].country_name = convertCountryIdtoName($scope.countries, $scope.facultyUpdate);
                         setListIndex(null);
                     })
                     .catch(function(data){
                      });
                 }
             $scope.facultyAdd = function(){
-                $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.f)
+                $http.post('http://localhost:6543/tff_api/v1.0/faculty/add' , $scope.newFaculty)
                      .then(function(data){
                         $scope.msg = data.data.message;
+                        $scope.newFaculty = null;
                     })
                      .catch(function(data){
                         $scope.msg = data.data.error_msg;  
                         console.log(data);
                    });
-                }
+                } 
+            $scope.selectPhonePrefix = function(countryCode){
+                $scope.newFaculty.phone = foundPhonePrefix(countryCode);
+            }
         });
 
+function convertCountryIdtoName(countries,faculty){
+    for(var i = 0; i < countries.length; i++){
+        if(countries[i].code == faculty.country){
+            return countries[i].name;
+        }
+    }
+}
 
-
+function foundPhonePrefix(countryCode){
+    var phonePrefixlist = ['00385','00387','00381','00386','0044','0049','00386','0036','0039','0047'];
+    return phonePrefixlist[countryCode-1];
+}
 
 
