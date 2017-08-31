@@ -24,7 +24,7 @@ issApp.run(function(defaultErrorMessageResolver){
 });
 
 
-issApp.config(function($stateProvider,$urlRouterProvider){
+issApp.config(function($stateProvider,$urlRouterProvider,$httpProvider){
     //RUTE
     $stateProvider
         .state('login',{
@@ -38,6 +38,7 @@ issApp.config(function($stateProvider,$urlRouterProvider){
                 controller:'superAdminController'
                 });
        $urlRouterProvider.otherwise('/');
+       
     });
 
 issApp.controller('mainController',function($scope,$rootScope){
@@ -61,13 +62,15 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
     var deleteFacultyId = null;
     $scope.countries;
     $scope.newFaculty;
-    
-    
-    $scope.getListofFaculties = function(){
+    $scope.usersList;
+    $scope.facultyList;
+  
+   $scope.getListofFaculties = function(){
+       
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
             .then(function(response){
                 $scope.facultyList = response.data.faculty_list;
-            })
+                })
             .catch(function(data){
                });
        }
@@ -137,6 +140,31 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
             $scope.selectPhonePrefix = function(countryCode){
                 $scope.newFaculty.phone = foundPhonePrefix(countryCode);
             }
+            $scope.getUsers = function(){
+                    $http.get('http://localhost:6543/tff_api/v1.0/users')
+                        .then(function(response){
+                            
+                           $scope.usersList = response.data.admins_list;
+                           
+                          }).catch(function(data){});
+                    }
+            $scope.toogleUseractivation = function(id,index){
+               var user = {"user_id":id};
+                    $http.post("http://localhost:6543/tff_api/v1.0/users/change_activation_status",user).then(function(data){
+                        $scope.usersList[index].deactivated = changeUserActivation($scope.usersList[index].deactivated);
+                    }).catch(function(data){
+                        console.log(data);
+                    }); 
+            }
+            $scope.deleteUser = function(id,index){
+                $http.delete("http://localhost:6543/tff_api/v1.0/users/"+id+"/delete") 
+                .then(function(data){
+                    $scope.usersList.splice(index,1);
+                }).catch(function(data){
+                 console.log(data);
+                 }) 
+        }
+
         });
 
 function convertCountryIdtoName(countries,faculty){
@@ -151,5 +179,17 @@ function foundPhonePrefix(countryCode){
     var phonePrefixlist = ['00385','00387','00381','00386','0044','0049','00386','0036','0039','0047'];
     return phonePrefixlist[countryCode-1];
 }
+
+function changeUserActivation(deactivated){
+    if(deactivated){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+
+
 
 

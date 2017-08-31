@@ -5,6 +5,7 @@ $(document).ready(function () {
         }
         else {
             $("#faculty-info-content").fadeIn();
+            closeUserContent();
         }
         if ($("#facultyadd-form").css("display") == "block") {
             $("#facultyadd-form").hide();
@@ -15,6 +16,7 @@ $(document).ready(function () {
         if ($("#update-form").css("display") == 'block') {
             $("#update-form").hide();
         }
+        
     });
     
     $("#open-facultyadd-form").click(function () {
@@ -63,6 +65,37 @@ $(document).ready(function () {
     $("#close-updateform-onSubmit").click(function () {
         $("#update-form").fadeOut();
     });
+    /* ****  USER CONTETNT **** */
+    $("#show-list-of-users").click(function(){
+            if($("#users-content").css("display") == "none"){
+                closeFaculyContent();
+                $("#users-content").fadeIn();
+            }
+            else{
+                $("#users-content").fadeOut();
+            }
+           
+
+    });
+ 
+    function closeFaculyContent(){
+        if ($("#faculty-info-content").css("display") == "block") {
+            $("#faculty-info-content").fadeOut();
+        }
+        if ($("#facultyadd-form").css("display") == "block") {
+            $("#facultyadd-form").hide();
+        }
+        if ($("#delete-prompt").css("display") == 'block') {
+            $("#delete-prompt").hide();
+        }
+        if ($("#update-form").css("display") == 'block') {
+            $("#update-form").hide();
+        }
+    }
+    function closeUserContent(){
+        if($("#users-content").css("display") == "block"){
+            $("#users-content").hide();
+    }}
    
 });
 

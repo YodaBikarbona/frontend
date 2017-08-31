@@ -20,7 +20,7 @@
         <div class="menu">
             <ul class="nav nav-pills nav-stacked">
                 <li><a href="" id="show-list-of-faculties" ng-click="getListofFaculties()"><i class="fa fa-university" aria-hidden="true"></i> Fakulteti</a></li>
-                <li><a>Korisnici</a></li>
+                <li><a id="show-list-of-users" ng-click = "getUsers()">Korisnici</a></li>
             </ul>
         </div>
         <div class="content">
@@ -182,12 +182,40 @@
                 </div>
             </div>
             <!-- END OF FACULTY CONTENT -->
-            <div id = "korsinici"> <!-- USER CONTENT -->
-            
+            <div id = "users-content"> <!-- USER CONTENT -->
+                <div>
+                    <table class = "table table-bordered">
+                        <tr>
+                            <th>Ime</th>
+                            <th>Prezime</th>
+                            <th>Email</th>
+                            <th>Fakultet</th>
+                            <th>Uloga</th>
+                            <th>Aktivan</th>
+                            <th>Kreiran</th>
+                            <th>Opcije</th>
+                         </tr>
+                         <tr ng-repeat="user in usersList">
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.last_name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.faculty_name}}</td>
+                            <td>{{user.role.name}}</td>
+                            <td>{{user.deactivated}}</td>
+                            <td>{{user.created}}</td>
+                            <td><button ng-click="toogleUseractivation(user.id,$index)">d</button>
+                                <button ng-click="deleteUser(user.id,$index)">X</button></td>      
+                        </tr>
+                </table>
+                
+                
+
+                </div>
             </div>
         </div>
         <!-- END OF CONTENT -->
     </div>
     <!-- END OF CONTANIER -->
     <script src="../static/js/superadmin-facultycontent-jq.js"></script>
+    <script src ="../static/js/superadmin-user-content-jq.js"></script>
 </div>
