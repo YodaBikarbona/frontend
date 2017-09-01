@@ -203,10 +203,12 @@
                             <td>{{user.role.name}}</td>
                             <td><p ng-if = "!user.deactivated">DA</p><p ng-if = "user.deactivated">NE</p></td>
                             <td>{{user.created}}</td>
-                            <td><button ng-click="toogleUseractivation(user.id,$index)">
-                                <p ng-if = "!user.deactivated">DE</p><p ng-if = "user.deactivated">AC</p>
+                            <td><button class = "btn btn-warning btn-xs" ng-click="toogleUseractivation(user.id,$index)">
+                                <i class="fa fa-ban" aria-hidden="true"ng-if = "!user.deactivated"></i><i class="fa fa-check-circle-o" aria-hidden="true" ng-if = "user.deactivated"></i>
                             </button>
-                                <button ng-click="deleteUser(user.id,$index)">X</button></td>      
+                                <button class="btn btn-danger btn-xs" ng-click="deleteUser(user.id,$index)">
+                                        <i class="fa fa-times" aria-hidden="true"></i>    
+                                </button></td>      
                         </tr>
                 </table>
                 
