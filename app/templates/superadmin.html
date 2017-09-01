@@ -201,9 +201,11 @@
                             <td>{{user.email}}</td>
                             <td>{{user.faculty_name}}</td>
                             <td>{{user.role.name}}</td>
-                            <td>{{user.deactivated}}</td>
+                            <td><p ng-if = "!user.deactivated">DA</p><p ng-if = "user.deactivated">NE</p></td>
                             <td>{{user.created}}</td>
-                            <td><button ng-click="toogleUseractivation(user.id,$index)">d</button>
+                            <td><button ng-click="toogleUseractivation(user.id,$index)">
+                                <p ng-if = "!user.deactivated">DE</p><p ng-if = "user.deactivated">AC</p>
+                            </button>
                                 <button ng-click="deleteUser(user.id,$index)">X</button></td>      
                         </tr>
                 </table>
