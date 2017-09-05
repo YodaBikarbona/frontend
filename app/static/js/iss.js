@@ -8,7 +8,7 @@ issApp.run(function(defaultErrorMessageResolver){
         errorMesages['invalidFacultyname'] = "Naziv Fakulteta može sadržavati slova i brojeve";
         errorMesages['invalidFacultyminlength'] = "Naziv fakulteta mora sadžavati bar dva znaka";
         errorMesages['invalidFacultymaxlength'] = "Naziv fakulteta ne može biti preko 40 znakova";
-       
+
         errorMesages['invalidCity'] = "Naziv grada može sadržavati slova i brojeve";
         errorMesages['invalidCityminlength'] = "Naziv grada mora sadžavati bar dva znaka";
         errorMesages['invalidCitymaxlength'] = "Naziv grada ne može biti preko 30 znakova";
@@ -38,12 +38,12 @@ issApp.config(function($stateProvider,$urlRouterProvider,$httpProvider){
                 controller:'superAdminController'
                 });
        $urlRouterProvider.otherwise('/');
-       
+
     });
 
 issApp.controller('mainController',function($scope,$rootScope){
     $rootScope.logedIn = false;
-    
+
     });
 
 issApp.controller('loginController',function($scope,$location,$rootScope){
@@ -57,16 +57,17 @@ issApp.controller('loginController',function($scope,$location,$rootScope){
     });
 
 issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScope){
-   
+
     var facultiListindex = null;
     var deleteFacultyId = null;
     $scope.countries;
     $scope.newFaculty;
     $scope.usersList;
     $scope.facultyList;
-  
+    $scope.addUser;
+
    $scope.getListofFaculties = function(){
-       
+
           $http.get('http://localhost:6543/tff_api/v1.0/faculties')
             .then(function(response){
                 $scope.facultyList = response.data.faculty_list;
@@ -74,7 +75,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
             .catch(function(data){
                });
        }
-       
+
     $scope.loadCountries = function(){
         $http.get('http://localhost:6543/tff_api/v1.0/countries')
                 .then(function(response){
@@ -90,7 +91,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
         function setListIndex(index){
                 facultiListindex = index;
             }
-        
+
         $scope.deleteFaculty = function(){
             if(deleteFacultyId!=null){
                 $http.delete('http://localhost:6543/tff_api/v1.0/faculty/'+deleteFacultyId+'/delete')
@@ -113,7 +114,7 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                             setListIndex(index);
                         }).catch(function(data){
                     });
-              
+
             }
            $scope.updateFaculty = function(id){
                 $http.post("http://localhost:6543/tff_api/v1.0/faculty/"+id+"/edit", $scope.facultyUpdate)
@@ -133,19 +134,19 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                         $scope.newFaculty = null;
                     })
                      .catch(function(data){
-                        $scope.msg = data.data.error_msg;  
+                        $scope.msg = data.data.error_msg;
                         console.log(data);
                    });
-                } 
+                }
             $scope.selectPhonePrefix = function(countryCode){
                 $scope.newFaculty.phone = foundPhonePrefix(countryCode);
             }
             $scope.getUsers = function(){
                     $http.get('http://localhost:6543/tff_api/v1.0/users')
                         .then(function(response){
-                            
+
                            $scope.usersList = response.data.admins_list;
-                           
+
                           }).catch(function(data){});
                     }
             $scope.toogleUseractivation = function(id,index){
@@ -154,15 +155,47 @@ issApp.controller('superAdminController' ,function($scope,$http,$state,$rootScop
                         $scope.usersList[index].deactivated = changeUserActivation($scope.usersList[index].deactivated);
                     }).catch(function(data){
                         console.log(data);
-                    }); 
+                    });
             }
             $scope.deleteUser = function(id,index){
-                $http.delete("http://localhost:6543/tff_api/v1.0/users/"+id+"/delete") 
+                $http.delete("http://localhost:6543/tff_api/v1.0/users/"+id+"/delete")
                 .then(function(data){
                     $scope.usersList.splice(index,1);
                 }).catch(function(data){
                  console.log(data);
-                 }) 
+                 })
+        }
+        $scope.loadCitiesByCountry = function(country){
+
+          $scope.cities = [];
+         resetUser();
+          $scope.cities = $scope.countries[country-1].cities;
+
+        }
+        $scope.getListofFacultiesbyCoutryAndCity = function(user){
+          resetUser();
+          if(user.country!=null && user.city!=null){
+          $http.post('http://localhost:6543/tff_api/v1.0/country/city/faculties' , user)
+            .then(function(data){
+              $scope.facultyListByCity = data.data.faculty_list;
+              console.log($scope.facultyListByCity)
+            }).catch(function(data){
+            })
+          }
+        }
+
+        $scope.addUsers = function() {
+          $http.post('http://localhost:6543/tff_api/v1.0/users/add', $scope.addUser)
+            .then(function(data){
+              resetUser();
+            }).catch(function(data){});
+        }
+        function resetUser(){
+          $scope.addUser.faculty = null;
+          $scope.addUser.first_name = null;
+          $scope.addUser.last_name = null;
+          $scope.addUser.email = null;
+          $scope.addUser.password = null;
         }
 
         });
@@ -188,8 +221,3 @@ function changeUserActivation(deactivated){
         return true;
     }
 }
-
-
-
-
-

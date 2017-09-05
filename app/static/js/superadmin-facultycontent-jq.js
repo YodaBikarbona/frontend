@@ -16,9 +16,9 @@ $(document).ready(function () {
         if ($("#update-form").css("display") == 'block') {
             $("#update-form").hide();
         }
-        
+
     });
-    
+
     $("#open-facultyadd-form").click(function () {
         if ($("#delete-prompt").css("display") == 'block') {
             $("#delete-prompt").hide();
@@ -74,10 +74,14 @@ $(document).ready(function () {
             else{
                 $("#users-content").fadeOut();
             }
-           
+
 
     });
- 
+
+    $("#open-useradd-form").click(function(){
+          $("#user-add-form").fadeIn();
+    });
+
     function closeFaculyContent(){
         if ($("#faculty-info-content").css("display") == "block") {
             $("#faculty-info-content").fadeOut();
@@ -96,6 +100,5 @@ $(document).ready(function () {
         if($("#users-content").css("display") == "block"){
             $("#users-content").hide();
     }}
-   
-});
 
+});

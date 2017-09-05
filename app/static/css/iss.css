@@ -13,14 +13,14 @@
     height: auto;
     padding: 7%;
     color: #428bca;
-   
+
 }
 #login-form-wrapper{
     width: 30%;
     margin: 0px auto;
     height: 700px;
-    
-    
+
+
 }
 #login-image{
    text-align: center;
@@ -39,10 +39,10 @@
     background-color: rgba(0,0,0,0.2);
 }
 #login-form-title h2{
-    
+
 }
 #login-form{
-    
+
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: rgba(0,0,0,0.2);
@@ -77,16 +77,16 @@
     border-radius: 4px;
 }
 .form-control:focus{
-   
+
     border-width: 2px;
 }
 #submit-button{
     text-align: center;
     padding-bottom: 30px;
-    
+
 }
 #submit-button input{
-    
+
    background-color:#428bca;
     border: none;
     color: white;
@@ -99,7 +99,7 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-    
+
 }
 #submit-button input:hover{
     background-color: #008CBA;
@@ -109,14 +109,14 @@
 /*////////////////// SUPER ADMIN ///////////////////*/
 
 .contanier{
-    
+
     margin: 10px 10px 0px 10px;
 }
 #header{
-    
+
     background-color: rgb(66,139,202);
     height: 50px;
-    
+
 }
 #title{
     width: 20%;
@@ -127,7 +127,7 @@
 #title p{
     padding: 10px;
     font-size: 110%;
-    
+
 }
 #navdropdown{
     float: right
@@ -135,7 +135,7 @@
 .dropdown button{
     height: 50px;
     border-radius: 0px;
-   
+
 }
 
 .menu{
@@ -147,7 +147,7 @@
 .content{
     width: 90%;
     float:right;
-    
+
 }
 #addbutton{
     text-align: right;
@@ -156,12 +156,12 @@
     position: absolute;
     display:none;
     left: 30%;
-    top: 15%; 
-    z-index: 0; 
-    border: 2px solid #d9534f; 
-    border-radius: 5px; 
-    width:40%; 
-    background-color: white; 
+    top: 15%;
+    z-index: 0;
+    border: 2px solid #d9534f;
+    border-radius: 5px;
+    width:40%;
+    background-color: white;
 }
 
 #update-form{
@@ -170,9 +170,9 @@
     left:30%;
     top:15%;
     width: 50%;
-    z-index:0; 
-    border: 2px solid #5bc0de; 
-    border-radius:5px; 
+    z-index:0;
+    border: 2px solid #5bc0de;
+    border-radius:5px;
     background-color:white;
 
 }
@@ -188,7 +188,7 @@
     width: 55%;
     z-index: 0;
     border: 2px solid #5cb85c;
-    border-radius: 5px;    
+    border-radius: 5px;
     background-color: white;
 }
 
@@ -202,11 +202,25 @@
     text-align: center;
 
 }
-
 #users-content{
     display: none;
 }
 
+#add-user-button{
+  text-align: right;
+}
 
-
-  
+#user-add-form{
+  display: none;
+  position: absolute;
+  top:15%;
+  left: 25%;
+  width: 55%;
+  z-index: 0;
+  border: 2px solid #5cb85c;
+  border-radius: 5px;
+  background-color: white;
+}
+#user-add-form form{
+  padding: 5px;
+}
