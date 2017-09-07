@@ -73,13 +73,19 @@ $(document).ready(function () {
             }
             else{
                 $("#users-content").fadeOut();
+                $("#user-add-form").hide();
             }
-
+        });
+    $("#open-useradd-form").click(function(){
+      if ($("#user-add-form").css("display") == 'none') {
+        $("#user-add-form").fadeIn();
+      } else {
+        $("#user-add-form").fadeOut();
+      }
 
     });
-
-    $("#open-useradd-form").click(function(){
-          $("#user-add-form").fadeIn();
+    $("#close-useradd-form").click(function(){
+      $("#user-add-form").fadeOut();
     });
 
     function closeFaculyContent(){
@@ -99,6 +105,10 @@ $(document).ready(function () {
     function closeUserContent(){
         if($("#users-content").css("display") == "block"){
             $("#users-content").hide();
-    }}
+          }
+        if($("#user-add-form").css("display") == "block"){
+          $("#user-add-form").hide();
+        }
+  }
 
 });

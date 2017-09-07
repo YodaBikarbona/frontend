@@ -102,7 +102,7 @@
                         <h4>UNESITE PODATKE O FAKULTETU</h4>
                     </div>
 
-                    <form ng-submit="facultyAdd()" novalidate>
+                    <form ng-submit="facultyAdd()"  novalidate>
                         <div class="form-group">
                             <label for="name">Naziv Fakulteta</label>
                             <input type="text" class="form-control" id="name" ng-model="newFaculty.name" required
@@ -183,8 +183,8 @@
             </div>
             <!-- END OF FACULTY CONTENT -->
             <div id = "users-content"> <!-- USER CONTENT -->
-                <div>
-                    <table class = "table table-bordered">
+                <div style = "overflow-y:scroll; height:500px;">
+                    <table class = "table table-bordered" style="border-left:2px solid #5cb85c">
                         <tr>
                             <th>Ime</th>
                             <th>Prezime</th>
@@ -211,6 +211,7 @@
                                 </button></td>
                               </tr>
                 </table>
+                </div>
 
                 <div id="add-user-button">
                     <a href="" id="open-useradd-form" class="btn btn-success " ng-click="loadCountries()">
@@ -273,10 +274,12 @@
 
 
                   </form>
-
+                  <div style="text-align:center">
+                    <strong >{{usersMsg}}</strong>
+                  </div>
               </div>
 
-                </div>
+
             </div>
         </div>
         <!-- END OF CONTENT -->
