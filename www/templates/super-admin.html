@@ -1,4 +1,4 @@
-<div>
+<div class = "super-admin-contanier">
     <div id="header">
         <div id="title">
             <p>Super Admin</p>
@@ -27,7 +27,7 @@
 
             <div id='faculty-info-content' style="display:none;">
                 <!--BEGINING OF FACULTY CONTENT -->
-                <div>
+                <div style="overflow-y:scroll; height:500px;">
                     <table class="table table-bordered" style="border-left: 2px solid #428bca;" id="faculty-list-table">
                         <tr>
                             <th>Ime fakulteta</th>
@@ -46,18 +46,19 @@
                             <td>{{faculty.phone}}</td>
                             <td>{{faculty.created}}</td>
                             <td>
-                                <a class="btn btn-warning btn-xs" id="open-update-form" ng-click="getFacultybyId(faculty.id,$index)">
+                                <a class="btn btn-info btn-xs" id="open-update-form" title = "Update faculty info!" ng-click="getFacultybyId(faculty.id,$index)">
                                         <i class="fa fa-bars" aria-hidden="true"></i></a>
-                                <a class="btn btn-danger btn-xs delete-button-prompt" ng-click="setFacultydeleteId(faculty.id,$index)" id="show_delete-comfirm">
+                                <a class="btn btn-danger btn-xs delete-button-prompt" title = "Delete faculty!" ng-click="setFacultydeleteId(faculty.id,$index)" id="show_delete-comfirm">
                                         <i class="fa fa-times" aria-hidden="true"></i></a>
                             </td>
                         </tr>
                     </table>
-                    <div id="addbutton">
-                        <a href="" id="open-facultyadd-form" class="btn btn-success " ng-click="loadCountries()">
-                                         <i class="fa fa-plus" aria-hidden="true"></i></a>
-                        <!-- PLUS BUTTON -->
-                    </div>
+
+                </div>
+                <div id="add-faculty-button">
+                    <a href="" id="open-facultyadd-form" class="btn btn-success " ng-click="loadCountries()">
+                                     <i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <!-- PLUS BUTTON -->
                 </div>
                 <div id="update-form">
                     <!-- BEGIN OF UPDATE FORM -->
@@ -269,10 +270,6 @@
                         <input class="btn btn-success" type="submit" value="Dodaj"/>
                       </div>
                     </div>
-
-
-
-
                   </form>
                   <div style="text-align:center">
                     <strong >{{usersMsg}}</strong>
@@ -285,6 +282,5 @@
         <!-- END OF CONTENT -->
     </div>
     <!-- END OF CONTANIER -->
-    <script src="../static/js/superadmin-facultycontent-jq.js"></script>
-
+    <script src="../js/superadmin-jq.js"></script>
 </div>
