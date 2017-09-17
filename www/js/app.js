@@ -27,7 +27,7 @@ angular.module('issApp', ['ui.router','jcs-autoValidate'])
     //RUTE
     $stateProvider
         .state('login',{
-               url: '/',   //<--    LOGIN RUTE
+               url: '/login',   //<--    LOGIN RUTE
                templateUrl: 'templates/login.html',
                controller : 'loginController'
                })
@@ -35,6 +35,19 @@ angular.module('issApp', ['ui.router','jcs-autoValidate'])
                 url: '/superadmin',
                 templateUrl: 'templates/super-admin.html',
                 controller:'superAdminController'
-                });
-       $urlRouterProvider.otherwise('/');
-}]);
+                })
+        .state('admin',{
+          url: '/admin',
+          templateUrl: 'templates/admin.html'
+        });
+       $urlRouterProvider.otherwise('/login');
+}])
+
+.run(function($transitions,$state,authservice,ROLE){
+    $transitions.onStart({ to:'*'},function(){
+      if(!authservice.isAuthenticated()){
+        $state.go('login');
+      }});
+    
+    
+  })

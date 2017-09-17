@@ -6,11 +6,8 @@ angular.module('issApp')
 
       var facultiListindex = null;
       var deleteFacultyId = null;
-      // $scope.countries = [];
-      // $scope.newFaculty = {};
-      // $scope.usersList = [] ;
-      // $scope.facultyList = [];
-      // $scope.addUser = {};
+      
+
 
       $scope.getListofFaculties = function(){
             superAdminFacultyService.getListFaculties(function(facultyList){
@@ -124,16 +121,27 @@ angular.module('issApp')
           }
   }])
 
-  .controller('loginController',['$scope','$location','$rootScope','$state',function($scope,$location,$rootScope,$state){
+  .controller('loginController',['$scope','authservice','$rootScope','$state','ROLE',function($scope,auth,$rootScope,$state,ROLE){
+          
           $scope.login = function(){
-          var email = $scope.mail;
-              if(email == 'veca'){
-                  $rootScope.logedIn = true;
-                  $state.go('superadmin');
-              }
-           }
+            var user = { email:$scope.mail, password: $scope.password};
+                if(user!=null){
+                  auth.login(user).then(function(authenticated){
+                    if(auth.role() == ROLE.superadmin){
+                            $state.go('superadmin');
+                      }
+                    
+                    if(auth.role() == ROLE.admin){
+                            $state.go('admin');
+                      }
+                    },function(err){});
+                  }
+                }
   }])
 
-  .controller('mainController',['$scope','$rootScope',function($scope,$rootScope){
-    $rootScope.logedIn = false;
-  }]);
+  .controller('mainController',['$scope','$rootScope','authservice',function($scope,$rootScope,auth){
+    $scope.logout = function(){
+      auth.logout();
+    }
+}]);
+  

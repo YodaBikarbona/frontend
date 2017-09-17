@@ -130,4 +130,79 @@ angular.module('issApp')
             callback(resp.data.faculty_list);
           },function(resp){});
         }
-  }]);
+  }])
+
+  .service('authservice', ['$http','API_ENDPOINT','$q', function($http,API_ENDPOINT,$q){
+      var LOCAL_STORAGE_KEY = 'mytoken'
+      var authToken;
+      var isAuthenticated = false;
+      var role = '';
+      var userName;
+
+      function loadUserCredidentals(){
+        var token = window.localStorage.getItem('mytoken')
+          if(token){
+            console.log(token);
+            isAuthenticated = true;
+          }
+      }
+
+      function storeUserCredidentals(user){
+        window.localStorage.setItem(LOCAL_STORAGE_KEY, user.token);
+        useUserCredidentals(user);   
+      }
+
+      function useUserCredidentals(user){
+        userName = user.first_name;
+        isAuthenticated = true;
+        authToken = user.token;
+        role = user.role_id;
+
+        $http.defaults.headers.common['Authorization'] = authToken;
+
+      }
+
+      function destroyUserCredidentals(){
+        isAuthenticated = false;
+        userName = '';
+        role = '';
+        window.localStorage.clear(LOCAL_STORAGE_KEY);
+         $http.defaults.headers.common.Authorization = undefined;
+        
+
+      }
+     
+      var login = function(user){
+        return $q(function(resolve,reject){
+                    $http({
+                          url :     API_ENDPOINT.url + '/login',
+                          method : 'POST',
+                          data :    user
+      }).then(function(resp){
+          if(resp.data.status = 'Ok'){
+            storeUserCredidentals(resp.data.user_data);
+            console.log(resp.data.user_data);
+            resolve(resp.data);
+          }else{
+            reject(resp.data);
+            
+          }
+        },function(resp){
+            
+          });
+  })}
+        loadUserCredidentals();
+      
+      var logout = function(){
+        destroyUserCredidentals();
+      }
+
+      return {
+        login : login,
+        logout : logout,
+        isAuthorized : true,
+        isAuthenticated : function(){return isAuthenticated;},
+        userName : function(){return userName;},
+        role: function(){return role;}
+      }
+  }])

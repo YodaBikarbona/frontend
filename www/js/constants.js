@@ -4,6 +4,13 @@ angular.module('issApp')
   url : 'http://localhost:6543/tff_api/v1.0'
 })
 
+.constant('ROLE',{
+  superadmin : '1',
+  admin : '2'
+
+
+})
+
 .constant('FORM_ERROR',{
   requiredMessage : 'Ovo polje je obavezno',
 
