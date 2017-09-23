@@ -23,7 +23,7 @@ angular.module('issApp', ['ui.router','jcs-autoValidate'])
 }])
 
 /* UI ROUTHER CONFIG */
-.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider,$httpProvider){
+.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
     //RUTE
     $stateProvider
         .state('login',{
@@ -51,3 +51,5 @@ angular.module('issApp', ['ui.router','jcs-autoValidate'])
     
     
   })
+
+

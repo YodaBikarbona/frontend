@@ -142,7 +142,6 @@ angular.module('issApp')
       function loadUserCredidentals(){
         var token = window.localStorage.getItem('mytoken')
           if(token){
-            console.log(token);
             isAuthenticated = true;
           }
       }
@@ -181,8 +180,7 @@ angular.module('issApp')
       }).then(function(resp){
           if(resp.data.status = 'Ok'){
             storeUserCredidentals(resp.data.user_data);
-            console.log(resp.data.user_data);
-            resolve(resp.data);
+              resolve(resp.data);
           }else{
             reject(resp.data);
             
@@ -206,3 +204,14 @@ angular.module('issApp')
         role: function(){return role;}
       }
   }])
+
+.factory('AuthInterceptor', ['$rootScope', function($rootScope){
+    var inter = {}
+    console.log('hey')
+   return inter;
+}])
+
+.config(['$httpProvider',function($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptor');
+}])
+  
