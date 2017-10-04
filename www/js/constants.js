@@ -5,8 +5,11 @@ angular.module('issApp')
 })
 
 .constant('ROLE',{
-  superadmin : '1',
-  admin : '2'
+  superadmin : 1,
+       admin : 2,
+     profesor: 3,
+     asistent: 4,
+     student : 5
 
 
 })

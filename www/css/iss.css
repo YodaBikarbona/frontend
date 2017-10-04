@@ -4,6 +4,7 @@ body{
 .mainview{
 }
 
+
 /* LOGIN FORM */
 .login-page {
   background: #76b852;
@@ -215,6 +216,7 @@ body{
 }
 .admin-menu ul li:hover{
   opacity: 0.3;
+  cursor: pointer;
 }
 .admin-menu ul li a{
   color: white;
@@ -226,4 +228,9 @@ body{
   width: 95%;
   top: 57px;
   left: 10.1%;
+}
+
+.admin-table{
+  width: 95%;
+
 }

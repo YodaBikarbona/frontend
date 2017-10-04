@@ -1,5 +1,61 @@
 angular.module('issApp')
 
+  .controller('adminController', ['$scope', 'adminService','ROLE', function($scope,adminService,ROLE){
+      $scope.roles = ['profesor','asistent','student'];
+      $scope.check = false;
+   
+   $scope.addUsers = function(user){
+        
+       /* adminService.addUsers(user,function(msg){
+          console.log(msg);
+        });*/
+      }
+      $scope.updateAccount = function(){
+
+      }
+
+      $scope.deactivateAccount = function(id){
+        
+
+      }
+
+      $scope.deleteAccount = function(id,role,index){
+        
+        if(role === ROLE.profesor){
+        // TODO http
+        $scope.profesors.splice(index,1);
+      }else if(role === ROLE.asistent) {
+        $scope.assistents.splice(index,1);
+      }else if(role === ROLE.student){
+        $scope.students.splice(index,1);
+      }
+    }
+        
+      
+
+
+      $scope.getPorfesors = function(){
+        $scope.check = !$scope.check;
+      adminService.getProffesors(function(profesors){
+        $scope.profesors = profesors;
+       });
+      }
+
+     $scope.getAssistents = function(){
+      $scope.check2 = !$scope.check2;
+      adminService.getAssistents(function(assistents){
+        $scope.assistents = assistents;
+      });
+      }
+
+     $scope.getStudents = function(){
+      adminService.getStudents(function(students){
+        $scope.students = students;
+      });
+    }
+    
+    
+  }])
 
   .controller('superAdminController',['$scope','superAdminFacultyService','superAdminUserService',
         function($scope,superAdminFacultyService,superAdminUserService){

@@ -1,15 +1,153 @@
 <div class="admin-contanier">
   <header>
       <h3>Admin</h3>
-  </header>
+
+    </header>
+
   <div class="admin-menu">
     <ul>
-      <li><a href="#">FAK</a></li>
-      <li><a href="#">PROF</a></li>
-      <li><a href="#">STUD</a></li>
+      <li ng-click = "getPorfesors()"><a>Profesori</a></li>
+      <li ng-click = "getAssistents()"><a>Asistenti</a></li>
+      <li ng-click = "getStudents()"><a>Studenti</a></li>
     </ul>
+     <a href ="#" ng-click="logout()">logout</a>
   </div>
-
   <div class="admin-content">
+    
+    <!-- PROFESORS LIST -->    
+      <div class="admin-table proffesors-table" ng-show = "check">
+        <table class="table">
+           <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Fakultet</th>
+            <th>Uloga</th>
+            <th>Registriran</th>
+            <th>Aktivan</th>
+            <th>Opcije</th>
+          </tr>
+          <tr ng-repeat="profesor in profesors">
+            <td>{{profesor.first_name}}</td>
+            <td>{{profesor.last_name}}</td>
+            <td>{{profesor.email}}</td>
+            <td>{{profesor.faculty_name}}</td>
+            <td>{{profesor.role.name}}</td>
+            <td>{{profesor.created}}</td>
+            <td>{{profesor.deactivated}}</td>
+            <td>
+                <button class="btn btn-info btn-xs" ng-click="updateAccount()">U</button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id)">D</button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(profesor.id,profesor.role_id,$index)">X</button>
+            </td>
+          </tr>
+        </table>
+    </div>
 
+    <!-- ASISTENT LIST --> 
+
+     <div class="admin-table" ng-show = "check2">
+        <table class="table">
+          <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Fakultet</th>
+            <th>Uloga</th>
+            <th>Registriran</th>
+            <th>Aktivan</th>
+            <th>Opcije</th>
+          </tr>
+          <tr ng-repeat="asistent in assistents">
+            <td>{{asistent.first_name}}</td>
+            <td>{{asistent.last_name}}</td>
+            <td>{{asistent.email}}</td>
+            <td>{{asistent.faculty_name}}</td>
+            <td>{{asistent.role.name}}</td>
+            <td>{{asistent.created}}</td>
+            <td>{{asistent.deactivated}}</td>
+            <td>
+                <button class="btn btn-info btn-xs">X</button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id)">D</button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(asistent.id,asistent.role_id,$index)">X</button>
+            </td>
+          </tr>
+        </table>
+    </div> 
+
+
+    <!-- STUDENT LIST --> 
+
+     <div class="admin-table" ng-show = "check3">
+        <table class="table">
+           <tr>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Fakultet</th>
+            <th>Uloga</th>
+            <th>Registriran</th>
+            <th>Aktivan</th>
+            <th>Opcije</th>
+          </tr>
+          <tr ng-repeat="student in students">
+            <td>{{student.first_name}}</td>
+            <td>{{student.last_name}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.faculty_name}}</td>
+            <td>{{student.role.name}}</td>
+            <td>{{student.created}}</td>
+            <td>{{student.deactivated}}</td>
+            <td>
+                <button class="btn btn-info btn-xs">X</button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">D</button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(student.id,student.role_id,$index)">X</button>
+            </td>
+          </tr>
+        </table>
+    </div> 
+  
+
+
+
+      <!-- ADD USERS -->
+      <div ng-show = "check4">
+      <form ng-submit = "addUsers(user)">
+                    
+                  <div class="form-group">
+                        <label>Ime</label>
+                        <input class = "form-control" type="text"  ng-model = "user.first_name">
+                      </div>
+                      <div class="form-group">
+                        <label>Prezime</label>
+                        <input class = "form-control" type="text"  ng-model = "user.last_name">
+                      </div>
+                      <div class="form-group">
+                        <label>Rola</label>
+                        <select ng-model = "user.role.name">
+                          <option disabled value="">Pick role</option>
+                          <option ng-repeat = "role in roles" value="{{role}}">{{role}}</option>
+                         
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input class = "form-control" type="text"  ng-model = "user.email">
+                      </div>
+                      <div class="form-group">
+                        <label>Šifra</label>
+                        <input class = "form-control" type="password"  ng-model = "user.password">
+                      </div>
+                      <div style="text-align:center">
+                        <input class="btn btn-success" type="submit" value="Dodaj"/>
+                      </div>
+                    
+                  </form>
+                  <div style="text-align:center">
+                    <strong ></strong>
+                  </div>
+              </div>
+
+               <!-- END OF ADD USERS -->
+  </div>
 </div>

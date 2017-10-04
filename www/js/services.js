@@ -1,5 +1,59 @@
 angular.module('issApp')
+  
+  .service('adminService', ['$http','API_ENDPOINT','ROLE','$log', function($http, API_ENDPOINT,ROLE,$log){
 
+    this.getProffesors = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.profesor,
+        method: 'GET'
+      }).then(function(resp){
+          callback(resp.data.user_list);
+      },
+        function(resp){
+          $log.log('ERROR');
+        });
+      }
+
+    this.getAssistents = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.asistent,
+        method: 'GET'
+      }).then(function(resp){
+        callback(resp.data.user_list);
+      },
+        function(resp){
+          $log.log('ERROR');
+        });
+
+    }
+    this.getStudents = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.student,
+        method: 'GET'
+      }).then(function(resp){
+        callback(resp.data.user_list);
+      },
+        function(resp){
+          $log.log('ERROR');
+        });
+    }
+    
+
+    this.addUsers = function(user,callback){
+      $http({
+        url: API_ENDPOINT.url+'/users/add',
+        method:'POST',
+        data: user
+      }).then(function(resp){
+        callback(resp)
+      },function(resp){
+        $log.log('ERROR');
+      });
+    }
+
+
+    
+  }])
   .service('superAdminFacultyService', ['$http','API_ENDPOINT', function($http, API_ENDPOINT){
 
       this.getListFaculties = function (cb) {
@@ -84,7 +138,7 @@ angular.module('issApp')
            method : 'GET'
          })
          .then(function(resp){
-           callback(resp.data.admins_list);
+           callback(resp.data.user_list);
          },function(resp){});
         }
 
@@ -143,6 +197,7 @@ angular.module('issApp')
         var token = window.localStorage.getItem('mytoken')
           if(token){
             isAuthenticated = true;
+             $http.defaults.headers.common['Authorization'] = token;
           }
       }
 

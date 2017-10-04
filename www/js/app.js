@@ -1,4 +1,4 @@
-angular.module('issApp', ['ui.router','jcs-autoValidate'])
+angular.module('issApp', ['ui.router','jcs-autoValidate','ngAnimate'])
 /* VALIDATE ERROR MASSAGES */
 .run(['defaultErrorMessageResolver','FORM_ERROR',function(defaultErrorMessageResolver,FORM_ERROR){
     defaultErrorMessageResolver.getErrorMessages().then(function(errorMesages){
@@ -38,7 +38,8 @@ angular.module('issApp', ['ui.router','jcs-autoValidate'])
                 })
         .state('admin',{
           url: '/admin',
-          templateUrl: 'templates/admin.html'
+          templateUrl: 'templates/admin.html',
+          controller: 'adminController'
         });
        $urlRouterProvider.otherwise('/login');
 }])
