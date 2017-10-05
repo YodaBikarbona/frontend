@@ -57,7 +57,7 @@ angular.module('issApp')
           method : 'DELETE',
           }).then(function(resp){
           },function(resp){
-            $log.log(resp);
+            
           });
         }
     this.deactivateAccount = function(id){
