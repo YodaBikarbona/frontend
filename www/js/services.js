@@ -56,7 +56,9 @@ angular.module('issApp')
           url : API_ENDPOINT.url + '/users/'+id+'/delete',
           method : 'DELETE',
           }).then(function(resp){
-          },function(resp){});
+          },function(resp){
+            $log.log(resp);
+          });
         }
     this.deactivateAccount = function(id){
       $http({
