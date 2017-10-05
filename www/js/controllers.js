@@ -17,13 +17,13 @@ angular.module('issApp')
       }
 
       $scope.deactivateAccount = function(id){
-        
+        adminService.deactivateAccount(id);
 
       }
 
       $scope.deleteAccount = function(id,role,index){
-       
-        adminService.deleteUser(id);
+
+        adminService.deleteAccount(id);
         if(role === ROLE.profesor){
         $scope.profesors.splice(index,1);
       }else if(role === ROLE.asistent) {
