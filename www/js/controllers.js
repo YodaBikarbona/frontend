@@ -2,7 +2,9 @@ angular.module('issApp')
 
   .controller('adminController', ['$scope', 'adminService','ROLE', function($scope,adminService,ROLE){
       $scope.roles = ['profesor','asistent','student'];
-      $scope.check = false;
+      $scope.showProfesors = false;
+      $scope.showAssistents = false;
+      $scope.showStudents = false;
    
    $scope.addUsers = function(user){
         
@@ -20,9 +22,9 @@ angular.module('issApp')
       }
 
       $scope.deleteAccount = function(id,role,index){
-        
+       
+        adminService.deleteUser(id);
         if(role === ROLE.profesor){
-        // TODO http
         $scope.profesors.splice(index,1);
       }else if(role === ROLE.asistent) {
         $scope.assistents.splice(index,1);
@@ -35,20 +37,21 @@ angular.module('issApp')
 
 
       $scope.getPorfesors = function(){
-        $scope.check = !$scope.check;
+        $scope.showProfesors = !$scope.showProfesors;
       adminService.getProffesors(function(profesors){
         $scope.profesors = profesors;
        });
       }
 
      $scope.getAssistents = function(){
-      $scope.check2 = !$scope.check2;
+      $scope.showAssistents = !$scope.showAssistents;
       adminService.getAssistents(function(assistents){
         $scope.assistents = assistents;
       });
       }
 
      $scope.getStudents = function(){
+        $scope.showStudents = !$scope.showStudents;
       adminService.getStudents(function(students){
         $scope.students = students;
       });
@@ -112,40 +115,40 @@ angular.module('issApp')
                 setListIndex(null);
               }
 
-        $scope.facultyAdd = function(){
+      $scope.facultyAdd = function(){
             superAdminFacultyService.addFaculty($scope.newFaculty,function(msg){
                     $scope.msg = msg;
                   });
                     $scope.newFaculty = {};
                 }
 
-        $scope.selectPhonePrefix = function(countryCode){
+      $scope.selectPhonePrefix = function(countryCode){
               $scope.newFaculty.phone = superAdminFacultyService.foundPhonePrefix(countryCode);
               }
 
-        $scope.getUsers = function(){
+      $scope.getUsers = function(){
             superAdminUserService.getUsers(function(usrList){
                   $scope.usersList = usrList;
                   });
               }
 
-        $scope.toogleUseractivation = function(id,index){
+      $scope.toogleUseractivation = function(id,index){
             superAdminUserService.toogleUseractivation(id);
                 $scope.usersList[index].deactivated = superAdminUserService
                             .changeUserActivationInList($scope.usersList[index].deactivated);
                   }
 
-        $scope.deleteUser = function(id,index){
+      $scope.deleteUser = function(id,index){
               superAdminUserService.deleteUser(id);
                   $scope.usersList.splice(index,1);
 
           }
-        $scope.loadCitiesByCountry = function(country){
+      $scope.loadCitiesByCountry = function(country){
               $scope.cities = $scope.countries[country-1].cities;
               resetUser();
             }
 
-        $scope.getListofFacultiesbyCoutryAndCity = function(user){
+      $scope.getListofFacultiesbyCoutryAndCity = function(user){
             resetUser();
               if(user.country!=null && user.city!=null){
                 superAdminUserService.getListOfFaculties(user,function(list){
@@ -155,7 +158,7 @@ angular.module('issApp')
 
 
       var interval;
-        $scope.addUsers = function() {
+      $scope.addUsers = function() {
             superAdminUserService.addUser($scope.addUser,function(addStatus){
               $scope.usersMsg = addStatus;
               $scope.addUser = null;
@@ -163,12 +166,12 @@ angular.module('issApp')
             });
           }
 
-         function clrMsg(){
+      function clrMsg(){
           $scope.usersMsg = '';
           clearInterval(interval);
           }
 
-          function resetUser(){
+      function resetUser(){
             $scope.addUser.faculty = null;
             $scope.addUser.first_name = null;
             $scope.addUser.last_name = null; // <---OVO MI SE NE SIVDJA

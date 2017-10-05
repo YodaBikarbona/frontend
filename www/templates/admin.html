@@ -15,7 +15,7 @@
   <div class="admin-content">
     
     <!-- PROFESORS LIST -->    
-      <div class="admin-table proffesors-table" ng-show = "check">
+      <div class="admin-table proffesors-table" ng-show = "showProfesors">
         <table class="table">
            <tr>
             <th>Ime</th>
@@ -34,7 +34,7 @@
             <td>{{profesor.faculty_name}}</td>
             <td>{{profesor.role.name}}</td>
             <td>{{profesor.created}}</td>
-            <td>{{profesor.deactivated}}</td>
+            <td><p ng-if = "!profesor.deactivated">DA</p><p ng-if = "profesor.deactivated">NE</p></td>
             <td>
                 <button class="btn btn-info btn-xs" ng-click="updateAccount()">U</button>
                 <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id)">D</button>
@@ -46,7 +46,7 @@
 
     <!-- ASISTENT LIST --> 
 
-     <div class="admin-table" ng-show = "check2">
+     <div class="admin-table" ng-show = "showAssistents">
         <table class="table">
           <tr>
             <th>Ime</th>
@@ -65,7 +65,7 @@
             <td>{{asistent.faculty_name}}</td>
             <td>{{asistent.role.name}}</td>
             <td>{{asistent.created}}</td>
-            <td>{{asistent.deactivated}}</td>
+             <td><p ng-if = "!asistent.deactivated">DA</p><p ng-if = "asistent.deactivated">NE</p></td>
             <td>
                 <button class="btn btn-info btn-xs">X</button>
                 <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id)">D</button>
@@ -78,7 +78,7 @@
 
     <!-- STUDENT LIST --> 
 
-     <div class="admin-table" ng-show = "check3">
+     <div class="admin-table" ng-show = "showStudents">
         <table class="table">
            <tr>
             <th>Ime</th>
@@ -97,11 +97,14 @@
             <td>{{student.faculty_name}}</td>
             <td>{{student.role.name}}</td>
             <td>{{student.created}}</td>
-            <td>{{student.deactivated}}</td>
+             <td><p ng-if = "!student.deactivated">DA</p><p ng-if = "student.deactivated">NE</p></td>
             <td>
                 <button class="btn btn-info btn-xs">X</button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">D</button>
-                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(student.id,student.role_id,$index)">X</button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">D
+                    </button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(student.id,student.role_id,$index)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
             </td>
           </tr>
         </table>
@@ -111,7 +114,7 @@
 
 
       <!-- ADD USERS -->
-      <div ng-show = "check4">
+      <div ng-show = "showAddUsers">
       <form ng-submit = "addUsers(user)">
                     
                   <div class="form-group">

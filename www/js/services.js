@@ -50,6 +50,22 @@ angular.module('issApp')
         $log.log('ERROR');
       });
     }
+    
+    this.deleteUser = function(id){
+        $http({
+          url : API_ENDPOINT.url + '/users/'+id+'/delete',
+          method : 'DELETE',
+          }).then(function(resp){
+          },function(resp){});
+        }
+    this.deactivateAccount = function(id){
+      $http({
+        url: API_ENDPOINT.url +'',
+        method: 'POST',
+        data: id
+      }).then(function(resp){},function(resp){})
+    }
+
 
 
     
