@@ -1,6 +1,6 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope', 'adminService','ROLE', function($scope,adminService,ROLE){
+  .controller('adminController', ['$scope', 'adminService','ROLE','superAdminUserService', function($scope,adminService,ROLE,s){
       $scope.roles = ['profesor','asistent','student'];
       $scope.showProfesors = false;
       $scope.showAssistents = false;
@@ -17,7 +17,7 @@ angular.module('issApp')
       }
 
       $scope.deactivateAccount = function(id){
-        adminService.deactivateAccount(id);
+        s.toogleUseractivation(id);
 
       }
 

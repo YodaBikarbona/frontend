@@ -62,22 +62,19 @@ angular.module('issApp')
           });
         }
     this.deactivateAccount = function(id){
-     
-      $http({
-        url: API_ENDPOINT.url +'/users/change_activation_status',
-        method: 'POST',
-        data: {user_id : id}
-      }).then(function(resp){
-        console.log(resp)
-      },function(resp){
-        console.log(resp)
-      })
+
+     $http({
+            url : API_ENDPOINT.url + '/users/change_activation_status',
+            method : 'POST',
+            data : {user_id : id}
+          }).then(function(resp){
+            console.log(resp);
+
+          },function(resp){
+
+          });
     }
-
-
-
-    
-  }])
+}])
   .service('superAdminFacultyService', ['$http','API_ENDPOINT', function($http, API_ENDPOINT){
 
       this.getListFaculties = function (cb) {
