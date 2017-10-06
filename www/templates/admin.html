@@ -36,9 +36,16 @@
             <td>{{profesor.created}}</td>
             <td><p ng-if = "!profesor.deactivated">DA</p><p ng-if = "profesor.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs" ng-click="updateAccount()">U</button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id)">D</button>
-                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(profesor.id,profesor.role_id,$index)">X</button>
+                <button class="btn btn-info btn-xs" ng-click="updateAccount()">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id)">
+                  <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
+                  <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(profesor.id,profesor.role_id,$index)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
             </td>
           </tr>
         </table>
@@ -67,9 +74,16 @@
             <td>{{asistent.created}}</td>
              <td><p ng-if = "!asistent.deactivated">DA</p><p ng-if = "asistent.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs">X</button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id)">D</button>
-                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(asistent.id,asistent.role_id,$index)">X</button>
+                <button class="btn btn-info btn-xs">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id)">
+                  <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
+                  <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-danger btn-xs" ng-click="deleteAccount(asistent.id,asistent.role_id,$index)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
             </td>
           </tr>
         </table>
@@ -99,8 +113,12 @@
             <td>{{student.created}}</td>
              <td><p ng-if = "!student.deactivated">DA</p><p ng-if = "student.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs">X</button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">D
+                <button class="btn btn-info btn-xs">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">
+                  <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
+                  <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
                     </button>
                 <button class="btn btn-danger btn-xs" ng-click="deleteAccount(student.id,student.role_id,$index)">
                     <i class="fa fa-times" aria-hidden="true"></i>

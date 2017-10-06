@@ -40,6 +40,7 @@ angular.module('issApp')
     
 
     this.addUsers = function(user,callback){
+      console.log(user);
       $http({
         url: API_ENDPOINT.url+'/users/add',
         method:'POST',
@@ -68,9 +69,7 @@ angular.module('issApp')
             method : 'POST',
             data : {user_id : id}
           }).then(function(resp){
-            console.log(resp);
-
-          },function(resp){
+            },function(resp){
 
           });
     }

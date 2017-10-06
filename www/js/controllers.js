@@ -1,23 +1,24 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope', 'adminService','ROLE','superAdminUserService', function($scope,adminService,ROLE,s){
+  .controller('adminController', ['$scope', 'adminService','ROLE', function($scope,adminService,ROLE){
       $scope.roles = ['profesor','asistent','student'];
       $scope.showProfesors = false;
       $scope.showAssistents = false;
       $scope.showStudents = false;
+      $scope.showAddUsers = true;
    
    $scope.addUsers = function(user){
         
-       /* adminService.addUsers(user,function(msg){
+        adminService.addUsers(user,function(msg){
           console.log(msg);
-        });*/
+        });
       }
       $scope.updateAccount = function(){
 
       }
 
       $scope.deactivateAccount = function(id){
-        s.toogleUseractivation(id);
+        adminService.deactivateAccount(id);
 
       }
 
@@ -37,6 +38,7 @@ angular.module('issApp')
 
 
       $scope.getPorfesors = function(){
+        $scope.profesors = [];
         $scope.showProfesors = !$scope.showProfesors;
       adminService.getProffesors(function(profesors){
         $scope.profesors = profesors;
