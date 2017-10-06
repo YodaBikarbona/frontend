@@ -9,6 +9,7 @@
       <li ng-click = "getPorfesors()"><a>Profesori</a></li>
       <li ng-click = "getAssistents()"><a>Asistenti</a></li>
       <li ng-click = "getStudents()"><a>Studenti</a></li>
+      <li ng-click = "getCourses()"><a>Smjerovi</a></li>
     </ul>
      <a href ="#" ng-click="logout()">logout</a>
   </div>
@@ -36,10 +37,10 @@
             <td>{{profesor.created}}</td>
             <td><p ng-if = "!profesor.deactivated">DA</p><p ng-if = "profesor.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs" ng-click="updateAccount()">
+                <button class="btn btn-info btn-xs" ng-click="getOneUser(profesor.id)">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id)">
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(profesor.id,profesor.role_id,$index)">
                   <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
                   <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
@@ -74,12 +75,12 @@
             <td>{{asistent.created}}</td>
              <td><p ng-if = "!asistent.deactivated">DA</p><p ng-if = "asistent.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs">
+                <button class="btn btn-info btn-xs" ng-click="getOneUser(asistent.id)">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id)">
-                  <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
-                  <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(asistent.id,asistent.role_id,$index)">
+                  <i ng-if = "!asistent.deactivated" class="fa fa-ban" aria-hidden="true"></i>
+                  <i ng-if = "asistent.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
                 </button>
                 <button class="btn btn-danger btn-xs" ng-click="deleteAccount(asistent.id,asistent.role_id,$index)">
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -113,12 +114,12 @@
             <td>{{student.created}}</td>
              <td><p ng-if = "!student.deactivated">DA</p><p ng-if = "student.deactivated">NE</p></td>
             <td>
-                <button class="btn btn-info btn-xs">
+                <button class="btn btn-info btn-xs" ng-click="getOneUser(student.id)">
                   <i class="fa fa-pencil" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id)">
-                  <i ng-if = "!profesor.deactivated" class="fa fa-ban" aria-hidden="true"></i>
-                  <i ng-if = "profesor.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                <button class="btn btn-warning btn-xs" ng-click="deactivateAccount(student.id,student.role_id,$index)">
+                  <i ng-if = "!student.deactivated" class="fa fa-ban" aria-hidden="true"></i>
+                  <i ng-if = "student.deactivated" class="fa fa-check-circle-o" aria-hidden="true"></i>
                     </button>
                 <button class="btn btn-danger btn-xs" ng-click="deleteAccount(student.id,student.role_id,$index)">
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -132,7 +133,8 @@
 
 
       <!-- ADD USERS -->
-      <div ng-show = "showAddUsers">
+    <div ng-show = "showAddUsers">
+
       <form ng-submit = "addUsers(user)">
                     
                   <div class="form-group">
@@ -145,7 +147,7 @@
                       </div>
                       <div class="form-group">
                         <label>Rola</label>
-                        <select ng-model = "user.role.name">
+                        <select ng-model = "user.role">
                           <option disabled value="">Pick role</option>
                           <option ng-repeat = "role in roles" value="{{role}}">{{role}}</option>
                          
@@ -166,9 +168,59 @@
                   </form>
                   <div style="text-align:center">
                     <strong ></strong>
-                  </div>
               </div>
+        </div>
 
                <!-- END OF ADD USERS -->
+
+        <!-- Update USERS -->
+    <div ng-show = "showAddUsers">
+      <form ng-submit = "updateUser(userUpdate)" style = "width:300px;">
+                    
+                  <div class="form-group">
+                        <input type="hidden" ng-model = "userUpdate.user_id">
+                        <label>Ime</label>
+                        <input class = "form-control" type="text"  ng-model = "userUpdate.first_name">
+                      </div>
+                      <div class="form-group">
+                        <label>Prezime</label>
+                        <input class = "form-control" type="text"  ng-model = "userUpdate.last_name">
+                      </div>
+                      <div class="form-group">
+                        <label>Rola</label>
+                        <select ng-model = "userUpdate.role">
+                          <option disabled value="">Pick role</option>
+                          <option ng-repeat = "role in roles" value="{{role}}">{{role}}</option>
+                         
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Email</label>
+                        <input class = "form-control" type="text"  ng-model = "userUpdate.email">
+                      </div>
+                      <div class="form-group">
+                        <label>Šifra</label>
+                        <input class = "form-control" type="password"  ng-model = "userUpdate.password">
+                      </div>
+                      <div style="text-align:center">
+                        <input class="btn btn-info" type="submit" value="Update"/>
+                      </div>
+                    
+                  </form>
+                  <div style="text-align:center">
+                    <strong ></strong>
+              </div>
+        </div>
+
+               <!-- END OF Update USERS -->
+
+        <div>
+          <h1>COURSES</h1>
+          <ul style="list-style-type: none">
+            <li style="display:inline; margin-right:4px;" ng-repeat="course in courses"><button
+              class = "btn btn-primary">{{course.name}}</button>
+            </li>
+          </ul>
+          
   </div>
 </div>

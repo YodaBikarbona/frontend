@@ -1,4 +1,20 @@
 angular.module('issApp')
+
+  .service('courseSevice', ['$http','API_ENDPOINT',function($http,apiUrl){
+    
+    this.getCourses = function(callback){
+    $http({
+      url: apiUrl.url + '/faculty/courses',
+      method: 'GET'
+    })
+    .then(function(resp){
+      callback(resp.data.course_list);
+    },function(resp){
+      callback(resp);
+    });
+  }
+
+}])
   
   .service('adminService', ['$http','API_ENDPOINT','ROLE','$log', function($http, API_ENDPOINT,ROLE,$log){
 
@@ -10,7 +26,6 @@ angular.module('issApp')
           callback(resp.data.user_list);
       },
         function(resp){
-          $log.log('ERROR');
         });
       }
 
@@ -33,9 +48,42 @@ angular.module('issApp')
       }).then(function(resp){
         callback(resp.data.user_list);
       },
-        function(resp){
-          $log.log('ERROR');
-        });
+        function(resp){});
+    }
+    
+    this.getOneUser = function(id,callback){
+
+      $http({
+        url: API_ENDPOINT.url +'/users/'+id,
+        method: 'GET'
+
+      }).then(function(resp){
+          var user =   {
+                      user_id: resp.data.user_dict.id,
+                      first_name: resp.data.user_dict.first_name, 
+                      last_name: resp.data.user_dict.last_name, 
+                      role: resp.data.user_dict.role.name, 
+                      email: resp.data.user_dict.email, 
+                      password: '' 
+                  }
+
+
+
+          callback(user);
+      },function(resp){
+      });
+    }
+
+    this.updateAccount = function(user){
+      $http({
+        url: API_ENDPOINT.url + '/users/edit',
+        method: 'POST',
+        data: user
+      }).then(function(resp){
+          console.log(resp);
+      },function(resp){
+
+      })
     }
     
 
@@ -48,7 +96,6 @@ angular.module('issApp')
       }).then(function(resp){
         callback(resp)
       },function(resp){
-        $log.log('ERROR');
       });
     }
     

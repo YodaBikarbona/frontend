@@ -1,26 +1,42 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope', 'adminService','ROLE', function($scope,adminService,ROLE){
+  .controller('adminController', ['$scope', 'adminService','courseSevice','ROLE', function($scope,adminService,cS,ROLE){
       $scope.roles = ['profesor','asistent','student'];
       $scope.showProfesors = false;
       $scope.showAssistents = false;
       $scope.showStudents = false;
       $scope.showAddUsers = true;
-   
-   $scope.addUsers = function(user){
+      
+      $scope.addUsers = function(user){
         
         adminService.addUsers(user,function(msg){
-          console.log(msg);
+
         });
       }
-      $scope.updateAccount = function(){
-
+      $scope.getOneUser = function(id){
+        adminService.getOneUser(id,function(user){
+         $scope.userUpdate = user;
+        });
       }
 
-      $scope.deactivateAccount = function(id){
+      $scope.updateUser = function(user){
+        adminService.updateAccount(user);
+        $scope.userUpdate = {};
+      }
+
+
+
+      $scope.deactivateAccount = function(id,role,index){
         adminService.deactivateAccount(id);
-
+          
+        if(role === ROLE.profesor){
+        $scope.profesors[index].deactivated = !$scope.profesors[index].deactivated;
+      }else if(role === ROLE.asistent) {
+        $scope.assistents[index].deactivated = !$scope.assistents[index].deactivated;
+      }else if(role === ROLE.student){
+        $scope.students[index].deactivated = !$scope.students[index].deactivated;
       }
+    }
 
       $scope.deleteAccount = function(id,role,index){
 
@@ -35,7 +51,11 @@ angular.module('issApp')
     }
         
       
-
+      $scope.getCourses = function(){
+        cS.getCourses(function(course){
+         $scope.courses = course;
+        })
+      }
 
       $scope.getPorfesors = function(){
         $scope.profesors = [];
