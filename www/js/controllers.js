@@ -6,6 +6,7 @@ angular.module('issApp')
       $scope.showAssistents = false;
       $scope.showStudents = false;
       $scope.showAddUsers = true;
+      $scope.showAbbreviation = false;
       
       $scope.addUsers = function(user){
         
@@ -54,7 +55,7 @@ angular.module('issApp')
       $scope.getCourses = function(){
         cS.getCourses(function(course){
          $scope.courses = course;
-        })
+        });
       }
 
       $scope.getPorfesors = function(){
@@ -77,6 +78,18 @@ angular.module('issApp')
       adminService.getStudents(function(students){
         $scope.students = students;
       });
+    }
+
+    $scope.getAbbreviations = function(course_id){
+      $scope.showAbbreviation = !$scope.showAbbreviation;
+      cS.getAbbreviationForCourse(course_id,function(abbreviations){
+        console.log(abbreviations)
+        $scope.abbreviations = abbreviations;
+      });
+    }
+    
+    $scope.addAbbreviation = function(course_id ,abbr){
+      cS.addAbbriviation(course_id,abbr);
     }
     
     

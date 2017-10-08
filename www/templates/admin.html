@@ -135,7 +135,9 @@
       <!-- ADD USERS -->
     <div ng-show = "showAddUsers">
 
-      <form ng-submit = "addUsers(user)">
+      <h1>DODAJ KORISNIKA</h1>
+
+      <form ng-submit = "addUsers(user)" style = "width:400px;">
                     
                   <div class="form-group">
                         <label>Ime</label>
@@ -147,11 +149,14 @@
                       </div>
                       <div class="form-group">
                         <label>Rola</label>
-                        <select ng-model = "user.role">
+                        <select class = "form-control" ng-model = "user.role">
                           <option disabled value="">Pick role</option>
-                          <option ng-repeat = "role in roles" value="{{role}}">{{role}}</option>
-                         
+                          <option ng-repeat = "role in roles" value="{{role}}">{{role.toUpperCase()}}</option>
                         </select>
+                      </div>
+                      <div class="form-group" ng-if = "user.role == 'student'">
+                        <label>Broj indeksa</label>
+                        <input type="text" class="form-control" ng-model = "user.index">
                       </div>
                       <div class="form-group">
                         <label>Email</label>
@@ -167,7 +172,7 @@
                     
                   </form>
                   <div style="text-align:center">
-                    <strong ></strong>
+                   <strong ></strong>
               </div>
         </div>
 
@@ -175,7 +180,8 @@
 
         <!-- Update USERS -->
     <div ng-show = "showAddUsers">
-      <form ng-submit = "updateUser(userUpdate)" style = "width:300px;">
+      <h1>UPDATE KORISNIKA</h1>
+      <form ng-submit = "updateUser(userUpdate)" style = "width:400px;">
                     
                   <div class="form-group">
                         <input type="hidden" ng-model = "userUpdate.user_id">
@@ -188,15 +194,18 @@
                       </div>
                       <div class="form-group">
                         <label>Rola</label>
-                        <select ng-model = "userUpdate.role">
-                          <option disabled value="">Pick role</option>
-                          <option ng-repeat = "role in roles" value="{{role}}">{{role}}</option>
-                         
+                        <select class = "form-control" ng-model = "userUpdate.role">
+                          <option disabled value="">Odaberi ulogu</option>
+                          <option ng-repeat = "role in roles" value="{{role}}">{{role.toUpperCase()}}</option>
                         </select>
+                      </div>
+                      <div class="form-group" ng-if = "userUpdate.role == 'student'">
+                        <label>Broj Indeksa</label>
+                        <input type="text" class="form-control" ng-model = "userUpdate.index">
                       </div>
                       <div class="form-group">
                         <label>Email</label>
-                        <input class = "form-control" type="text"  ng-model = "userUpdate.email">
+                        <input type="text" class = "form-control"  ng-model = "userUpdate.email">
                       </div>
                       <div class="form-group">
                         <label>Šifra</label>
@@ -216,11 +225,53 @@
 
         <div>
           <h1>COURSES</h1>
-          <ul style="list-style-type: none">
-            <li style="display:inline; margin-right:4px;" ng-repeat="course in courses"><button
-              class = "btn btn-primary">{{course.name}}</button>
-            </li>
-          </ul>
-          
-  </div>
+          <table class="table table-striped">
+            <tr>
+              <th>SMJER</th>
+              <th>BROJ</th>
+            </tr>
+            <tr ng-repeat="course in courses">
+              <td>{{course.name}}
+                <!-- table in table-->
+                <div ng-if = "course.abbreviation_number > 0 && showAbbreviation">
+                  <table class="table table-bordered" style="border:2px solid black; margin-top:15px;">
+                    <tr>
+                      <th>IME</th>
+                    </tr>
+                    <tr>
+                      <td ng-repeat="abbreviation in abbreviations">{{abbreviation.abbreviation}}</td>
+                    </tr>
+                  </table>
+              </div>
+                  
+                   <div ng-if = "course.abbreviation_number > 0 && showAbbreviation">
+                      <form ng-submit="addAbbreviation(course.id ,abbr)">
+                        <div class="form-group">
+                          <div class="form-group">
+                          <label>Skracenica</label>
+                          <input type="text" class="form-control" ng-model = "abbr" >
+                          </div>
+                          <div>
+                             <input class="btn btn-info" type="submit" value="Dodaj Skracenicu"/>
+                          </div>
+                        </form>
+                  </div>
+                        
+                      
+
+              </td>
+              <!--    -->
+              <td>
+                <button class="btn btn-primary" ng-click="getAbbreviations(course.id)">{{course.abbreviation_number}}</button>
+              </td>
+            </tr>
+            </table>
+      </div>
+      
+        <!-- DODAJ PREFIX-->
+
+      <div>
+        
+
+      </div>
 </div>

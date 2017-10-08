@@ -14,6 +14,35 @@ angular.module('issApp')
     });
   }
 
+  this.getAbbreviationForCourse = function(course_id,callback){
+    
+    $http({
+      url: apiUrl.url + '/faculty/course/'+course_id+'/abbreviations',
+      method: 'GET'
+    }).then(function(resp){
+        callback(resp.data.abbreviation_list);
+    },function(resp){
+
+    });
+  }
+
+  this.addAbbriviation = function(course_id,abbreviation){
+    $http({
+      url: apiUrl.url +'/faculty/course/abbreviation/add',
+      method: 'POST',
+      data: {
+            course_id: course_id,
+            abbreviation: abbreviation
+          }
+    }).then(function(resp){
+      console.log(resp);
+    },function(resp){
+         console.log(resp);
+    })
+
+
+  }
+
 }])
   
   .service('adminService', ['$http','API_ENDPOINT','ROLE','$log', function($http, API_ENDPOINT,ROLE,$log){
