@@ -6,7 +6,7 @@ angular.module('issApp')
       $scope.showAssistents = false;
       $scope.showStudents = false;
       $scope.showAddUsers = true;
-      $scope.showAbbreviation = false;
+      $scope.showAbbreviations = false;
       
       $scope.addUsers = function(user){
         
@@ -54,7 +54,7 @@ angular.module('issApp')
       
       $scope.getCourses = function(){
         cS.getCourses(function(course){
-         $scope.courses = course;
+          $scope.courses = course;
         });
       }
 
@@ -80,12 +80,16 @@ angular.module('issApp')
       });
     }
 
-    $scope.getAbbreviations = function(course_id){
+    $scope.getAbbreviations = function(course_id,index){
+      $scope.index = index;
+      $scope.showAbbreviations = !$scope.showAbbreviations;
+      
+      if(course_id!= null){
       $scope.showAbbreviation = !$scope.showAbbreviation;
       cS.getAbbreviationForCourse(course_id,function(abbreviations){
-        console.log(abbreviations)
         $scope.abbreviations = abbreviations;
       });
+    }
     }
     
     $scope.addAbbreviation = function(course_id ,abbr){

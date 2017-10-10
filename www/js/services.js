@@ -117,7 +117,6 @@ angular.module('issApp')
     
 
     this.addUsers = function(user,callback){
-      console.log(user);
       $http({
         url: API_ENDPOINT.url+'/users/add',
         method:'POST',
@@ -358,7 +357,7 @@ angular.module('issApp')
 
 .factory('AuthInterceptor', ['$rootScope', function($rootScope){
     var inter = {}
-    console.log('hey')
+    
    return inter;
 }])
 
