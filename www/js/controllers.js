@@ -1,12 +1,31 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope', 'adminService','courseSevice','ROLE', function($scope,adminService,cS,ROLE){
+  .controller('adminController', ['$scope','$state','adminService','courseSevice','ROLE', function($scope,$state,adminService,cS,ROLE){
       $scope.roles = ['profesor','asistent','student'];
-      $scope.showProfesors = false;
-      $scope.showAssistents = false;
-      $scope.showStudents = false;
-      $scope.showAddUsers = true;
-      $scope.showAbbreviations = false;
+      $scope.userParams = $state.params.user;
+      
+      
+      var user = {
+          created : '',
+          deactivated:false,
+          deleted:false,
+          email:'',
+          faculty_id:null,
+          faculty_name:'',
+          first_name:'',
+          id:null,
+          index_id:null,
+          last_change_date:'',
+          last_name:'',
+          registration_date:'',
+          role:{
+              name:''
+          },
+          role_id:null,
+          status:null,
+          userListIndex:null
+      }
+
       
       $scope.addUsers = function(user){
         
@@ -32,24 +51,29 @@ angular.module('issApp')
           
         if(role === ROLE.profesor){
         $scope.profesors[index].deactivated = !$scope.profesors[index].deactivated;
-      }else if(role === ROLE.asistent) {
+        }else if(role === ROLE.asistent) {
         $scope.assistents[index].deactivated = !$scope.assistents[index].deactivated;
-      }else if(role === ROLE.student){
+        }else if(role === ROLE.student){
         $scope.students[index].deactivated = !$scope.students[index].deactivated;
-      }
+        }
     }
+      $scope.setAccountDeleteData = function(id,role_id,index){
+          user.id = id;
+          user.role_id = role_id;
+          user.userListIndex = index;
+        }
 
-      $scope.deleteAccount = function(id,role,index){
-
-        adminService.deleteAccount(id);
-        if(role === ROLE.profesor){
-        $scope.profesors.splice(index,1);
-      }else if(role === ROLE.asistent) {
-        $scope.assistents.splice(index,1);
-      }else if(role === ROLE.student){
-        $scope.students.splice(index,1);
+      $scope.deleteAccount = function(){
+        adminService.deleteAccount(user.id,function(message){
+          if(user.role_id === ROLE.profesor){
+            $scope.profesors.splice(user.userListIndex,1);
+          }else if(user.role_id === ROLE.asistent) {
+            $scope.assistents.splice(user.userListIndex,1);
+          }else if(user.role_id === ROLE.student){
+            $scope.students.splice(user.userListIndex,1);
+          }
+        });
       }
-    }
         
       
       $scope.getCourses = function(){
@@ -60,21 +84,21 @@ angular.module('issApp')
 
       $scope.getPorfesors = function(){
         $scope.profesors = [];
-        $scope.showProfesors = !$scope.showProfesors;
-      adminService.getProffesors(function(profesors){
-        $scope.profesors = profesors;
-       });
+       
+         adminService.getProffesors(function(profesors){
+            $scope.profesors = profesors;
+        });
       }
 
      $scope.getAssistents = function(){
-      $scope.showAssistents = !$scope.showAssistents;
+     
       adminService.getAssistents(function(assistents){
         $scope.assistents = assistents;
       });
       }
 
      $scope.getStudents = function(){
-        $scope.showStudents = !$scope.showStudents;
+    
       adminService.getStudents(function(students){
         $scope.students = students;
       });
@@ -82,10 +106,10 @@ angular.module('issApp')
 
     $scope.getAbbreviations = function(course_id,index){
       $scope.index = index;
-      $scope.showAbbreviations = !$scope.showAbbreviations;
+      
       
       if(course_id!= null){
-      $scope.showAbbreviation = !$scope.showAbbreviation;
+      
       cS.getAbbreviationForCourse(course_id,function(abbreviations){
         $scope.abbreviations = abbreviations;
       });
@@ -230,7 +254,7 @@ angular.module('issApp')
                       }
                     
                     if(auth.role() == ROLE.admin){
-                            $state.go('admin');
+                            $state.go('admin',{user:auth.userObj()});
                       }
                     },function(err){});
                   }

@@ -1,7 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-body{
+*{
+  margin: 0;
+  padding: 0;
 }
 .mainview{
+
 }
 
 
@@ -182,55 +185,4 @@ body{
   padding: 5px;
 }
 
-/********** ADMIN **********/
-.admin-contanier header{
-  background-color: #4CAF50;  /*#488aff;*/
-  border-bottom: 1px solid white;
-  position: fixed;
-  height: auto;
-  width: 100%;
-  z-index: 1;
-}
-.admin-contanier header h3{
-  line-height: 25px;
-}
-.admin-menu{
-  width:10%;
-  height: 100%;
-  position: fixed;
-  top: 57px;
-  background-color: #222;
-  border-right: 2px solid #4CAF50;
-  color: white;
-  z-index: 1;
 
-}
-.admin-menu ul{
-  padding:0;
-  margin:0;
-  list-style:none;
-}
-.admin-menu ul li{
-  border-bottom: 1px solid darkgrey;
-  padding: 15px;
-}
-.admin-menu ul li:hover{
-  opacity: 0.3;
-  cursor: pointer;
-}
-.admin-menu ul li a{
-  color: white;
-  text-decoration: none;
-
-}
-.admin-content{
-  position: absolute;
-  width: 95%;
-  top: 57px;
-  left: 10.1%;
-}
-
-.admin-table{
-  width: 95%;
-
-}

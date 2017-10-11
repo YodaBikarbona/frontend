@@ -127,14 +127,14 @@ angular.module('issApp')
       });
     }
     
-    this.deleteAccount = function(id){
+    this.deleteAccount = function(id,callback){
         $http({
           url : API_ENDPOINT.url + '/users/'+id+'/delete',
           method : 'DELETE',
           }).then(function(resp){
-
+              callback(resp);
           },function(resp){
-
+              callback(resp);
           });
         }
     this.deactivateAccount = function(id){
@@ -144,6 +144,7 @@ angular.module('issApp')
             method : 'POST',
             data : {user_id : id}
           }).then(function(resp){
+            console.log(resp)
             },function(resp){
 
           });
@@ -286,7 +287,7 @@ angular.module('issApp')
       var authToken;
       var isAuthenticated = false;
       var role = '';
-      var userName;
+      var userObj = {};
 
       function loadUserCredidentals(){
         var token = window.localStorage.getItem('mytoken')
@@ -302,7 +303,7 @@ angular.module('issApp')
       }
 
       function useUserCredidentals(user){
-        userName = user.first_name;
+        userObj = user;
         isAuthenticated = true;
         authToken = user.token;
         role = user.role_id;
@@ -313,7 +314,7 @@ angular.module('issApp')
 
       function destroyUserCredidentals(){
         isAuthenticated = false;
-        userName = '';
+        userObj = {};
         role = '';
         window.localStorage.clear(LOCAL_STORAGE_KEY);
          $http.defaults.headers.common.Authorization = undefined;
@@ -350,7 +351,7 @@ angular.module('issApp')
         logout : logout,
         isAuthorized : true,
         isAuthenticated : function(){return isAuthenticated;},
-        userName : function(){return userName;},
+        userObj : function(){return userObj;},
         role: function(){return role;}
       }
   }])

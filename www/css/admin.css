@@ -1,0 +1,135 @@
+.header{
+  background-color: #4CAF50;
+  border-bottom: 1px solid black;
+  }
+
+.header #header-title{
+  text-align: center;
+  border-right: 1px solid white;
+}
+
+.header #header-menu {
+  text-align: right;
+}
+
+.header #header-menu #dropdown-menu-button{
+  border-radius: 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 7px;
+ }
+.header #header-menu p{
+  display: inline;
+  padding: 5px;
+ }
+
+ .admin-menu{
+  padding: 0;
+  background-color: #222;
+  height:100vh;
+ }
+
+ .admin-menu ul li{
+  border-bottom: 1px solid gray;
+ }
+.admin-menu ul li :hover{
+  border-radius: 0px;
+  cursor: pointer;
+  background-color: #545454;
+
+  }
+ .admin-menu ul li a {
+  color: white;
+ }
+  .admin-menu ul li a :hover {
+
+}
+.admin-menu ul li a p {
+  display: inline;
+  margin-left: 10px;
+}
+
+.admin-content{
+  padding:5px 2px;
+  background-color:#f6f6f6;
+  
+
+}
+.admin-table{
+  background-color: white;
+}
+
+.add-user-button{
+  margin: 0px 20px 0px 20px;
+  padding: 5px 20px;
+  border-top: 1px solid gray;
+  text-align: right;
+}
+
+.modal-delete-header{
+  background-color: #d9534f;
+}
+
+.modal-add-header{
+  background-color: #5cb85c;
+}
+
+.modal-update-header{
+  background-color: #5bc0de;
+}
+
+
+
+
+
+
+/********** ADMIN **********/
+/* .admin-contanier header{
+  background-color: #4CAF50;  /*#488aff;*/
+/*  border-bottom: 1px solid white;
+  height: auto;
+  width: 100%;
+  z-index: 1;
+}
+.admin-contanier header h3{
+  line-height: 25px;
+}
+.admin-menu{
+  width:10%;
+  height: 100%;
+  position: fixed;
+  top: 57px;
+  background-color: #222;
+  border-right: 2px solid #4CAF50;
+  color: white;
+  z-index: 1;
+
+}
+.admin-menu ul{
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+.admin-menu ul li{
+  border-bottom: 1px solid darkgrey;
+  padding: 15px;
+}
+.admin-menu ul li:hover{
+  opacity: 0.3;
+  cursor: pointer;
+}
+.admin-menu ul li a{
+  color: white;
+  text-decoration: none;
+
+}
+.admin-content{
+  position: absolute;
+  width: 95%;
+  top: 57px;
+  left: 10.1%;
+}
+
+.admin-table{
+  width: 95%;
+
+} */

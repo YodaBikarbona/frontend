@@ -39,7 +39,10 @@ angular.module('issApp', ['ui.router','jcs-autoValidate','ngAnimate'])
         .state('admin',{
           url: '/admin',
           templateUrl: 'templates/admin.html',
-          controller: 'adminController'
+          controller: 'adminController',
+          params:{
+            user:null
+          }
         });
        $urlRouterProvider.otherwise('/login');
 }])
