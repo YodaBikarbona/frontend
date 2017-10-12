@@ -30,27 +30,44 @@ angular.module('issApp', ['ui.router','jcs-autoValidate','ngAnimate'])
                url: '/login',   //<--    LOGIN RUTE
                templateUrl: 'templates/login.html',
                controller : 'loginController'
-               })
+        })
         .state('superadmin',{   //<--- Super Admin
                 url: '/superadmin',
-                templateUrl: 'templates/super-admin.html',
-                controller:'superAdminController'
-                })
+                templateUrl: 'templates/superadmin.html',
+                controller:'superAdminController',
+                params: {
+                  user: null
+                }
+          })
         .state('admin',{
           url: '/admin',
           templateUrl: 'templates/admin.html',
           controller: 'adminController',
-          params:{
-            user:null
+          params: {
+            user: null
           }
-        });
+        })
+        .state('professor',{
+          url: '/professor',
+          templateUrl: 'templates/professor.html'
+        })
+        .state('assistant',{
+          url:'/assistant',
+          templateUrl:'templates/assistant.html'
+        })
+        .state('student',{
+          url:'/student',
+          templateUrl:'templates/student.html'
+
+        })
+
        $urlRouterProvider.otherwise('/login');
 }])
 
 .run(function($transitions,$state,authservice,ROLE){
     $transitions.onStart({ to:'*'},function(){
       if(!authservice.isAuthenticated()){
-        $state.go('login');
+       // $state.go('login');
       }});
     
     

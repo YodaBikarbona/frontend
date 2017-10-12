@@ -1,10 +1,10 @@
 <div class="container-fluid">
-  <div class="row header">
+  <div class="row header" id = "admin-header">
     <div class="col-md-2" id="header-title">
-      <h4>ADMIN</h4>
+      <h4><i>ADMIN</i></h4>
     </div>
     <div class="col-md-10 dropdown" id="header-menu">
-      <a class="btn btn-success btn-lg dropdown-toggle" id="dropdown-menu-button" type="button" data-toggle="dropdown"><i class="fa fa-user-circle" aria-hidden="true"></i><p>{{userParams.first_name+" "+userParams.last_name}}</p>
+      <a class="btn btn-primary btn-lg dropdown-toggle" id="dropdown-menu-button" type="button" data-toggle="dropdown"><i class="fa fa-user-circle" aria-hidden="true"></i><p>{{userParams.first_name+" "+userParams.last_name}}</p>
            <span class="caret"></span></a>
       <ul class="dropdown-menu dropdown-menu-right">
         <li><a>Opcije</a></li>
@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2 admin-menu">
+    <div class="col-md-2 ui-menu">
       <ul class="nav nav-pills nav-stacked">
         <li ng-click="getPorfesors()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"><i class="fa fa-user" aria-hidden="true"></i><p>Profesori</p></a></li>
         <li ng-click="getAssistents()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2"><i class="fa fa-user" aria-hidden="true"></i><p>Asistenti</p></a></li>
@@ -24,15 +24,14 @@
         <li ng-click="getCourses()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse4"><i class="fa fa-book" aria-hidden="true"></i><p>Smjerovi</p></a></li>
       </ul>
     </div>
-    <div class="col-md-10 admin-content">
+    <div class="col-md-10 ui-content">
       <div class="panel-group" id="accordion">
         <div class="panel panel-default">
         
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
               <!-- PROFESORS LIST -->
-              <div class="admin-table">
-
+              <div>
                 <div>
                   <table class="table">
                     <tr>
@@ -83,8 +82,7 @@
           <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
               <!-- ASISTENT LIST -->
-
-              <div class="admin-table">
+              <div>
                 <div>
                   <table class="table">
                     <tr>
@@ -133,7 +131,7 @@
           <div id="collapse3" class="panel-collapse collapse">
             <div class="panel-body">
               <!-- STUDENT LIST -->
-              <div class="admin-table">
+              <div>
                 <div>
                   <table class="table">
                     <tr>

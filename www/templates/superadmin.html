@@ -1,0 +1,320 @@
+<div class="container-fluid">
+  <div class="row header" id="superadmin-header">
+    <div class="col-md-2" id="header-title">
+      <h4><i>SUPERADMIN</i></h4>
+    </div>
+    <div class="col-10 dropdown" id="header-menu">
+      <a class="btn btn-danger btn-lg dropdown-toggle" id="dropdown-menu-button" type="button" data-toggle="dropdown"><i class="fa fa-user-circle" aria-hidden="true"></i><p>{{userParams.first_name+" "+userParams.last_name}}</p>
+                <span class="caret"></span></a>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a>Opcije</a></li>
+        <li class="divider"></li>
+        <li><a href="#" ng-click="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 ui-menu">
+      <ul class="nav nav-pills nav-stacked">
+        <li ng-click="getListofFaculties()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"><i class="fa fa-university" aria-hidden="true"
+                     ></i><p>Fakulteti</p></a></li>
+        <li ng-click="getUsers()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2"><i class="fa fa-user" aria-hidden="true"></i><p>Korisnici</p></a></li>
+
+      </ul>
+    </div>
+    <div class="col-md-10 ui-content">
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div id="collapse1" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div>
+                <div>
+                  <table class="table">
+                    <tr>
+                      <th>Ime fakulteta</th>
+                      <th>Država</th>
+                      <th>Grad</th>
+                      <th>Adresa</th>
+                      <th>Broj telefona</th>
+                      <th>Kreirano</th>
+                      <th>Opcije</th>
+                    </tr>
+                    <tr ng-repeat="faculty in facultyList">
+                      <td>{{faculty.name}}</td>
+                      <td>{{faculty.country_name}}</td>
+                      <td>{{faculty.city}}</td>
+                      <td>{{faculty.address}}</td>
+                      <td>{{faculty.phone}}</td>
+                      <td>{{faculty.created}}</td>
+                      <td>
+                        <a class="btn btn-info btn-xs" title="Update faculty info!" data-toggle="modal" data-target="#update-faculty-modal" ng-click="getFacultybyId(faculty.id,$index)">
+                                        <i class="fa fa-bars" aria-hidden="true"></i></a>
+                        <a class="btn btn-danger btn-xs" title="Delete faculty!" data-toggle="modal" data-target="#deletefaculty-prompt-modal" ng-click="setFacultydeleteId(faculty.id,$index)">
+                                        <i class="fa fa-times" aria-hidden="true"></i></a>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="add-user-button">
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-faculty-modal" ng-click="loadCountries()"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+              <div>
+                <div>
+                  <table class="table">
+                    <tr>
+                      <th>Ime</th>
+                      <th>Prezime</th>
+                      <th>Email</th>
+                      <th>Fakultet</th>
+                      <th>Uloga</th>
+                      <th>Aktivan</th>
+                      <th>Kreiran</th>
+                      <th>Opcije</th>
+                    </tr>
+                    <tr ng-repeat="user in usersList">
+                      <td>{{user.first_name}}</td>
+                      <td>{{user.last_name}}</td>
+                      <td>{{user.email}}</td>
+                      <td>{{user.faculty_name}}</td>
+                      <td>{{user.role.name}}</td>
+                      <td>
+                        <p ng-if="!user.deactivated">DA</p>
+                        <p ng-if="user.deactivated">NE</p>
+                      </td>
+                      <td>{{user.created}}</td>
+                      <td><button class="btn btn-warning btn-xs" ng-click="toogleUseractivation(user.id,$index)">
+                                <i class="fa fa-ban" aria-hidden="true" ng-if = "!user.deactivated"></i><i class="fa fa-check-circle-o" aria-hidden="true" ng-if = "user.deactivated"></i>
+                            </button>
+                        <button class="btn btn-danger btn-xs" data-toggle ="modal" data-target="#deleteuser-prompt-modal" ng-click="deleteUser(user.id,$index)">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                </button></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="add-user-button">
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-user-modal" ng-click="loadCountries()"><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- NEW PANNEL HERE -->
+      </div>
+    </div>
+    <!-- END OF CONTENT -->
+    <!-- MODALS -->
+    <!-- ADD FACULTY MODAL -->
+    <div class="modal fade" id="add-faculty-modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Unestite podatke o fakultetu</h4>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="facultyAdd()" novalidate>
+              <div class="form-group">
+                <label for="name">Naziv Fakulteta</label>
+                <input type="text" class="form-control" id="name" ng-model="newFaculty.name" required ng-pattern="/^[A-Za-z0-9]{1,41}$/"
+                  ng-minlength="2" ng-maxlength="40" ng-pattern-err-type="invalidFacultyname" ng-minlength-err-type="invalidFacultyminlength"
+                  ng-maxlength-err-type="invalidFacultymaxlength" required-err-type="requiredMessage" />
+
+              </div>
+              <div class="form-group">
+                <label for="country">Država</label>
+                <select class="form-control" id="country" ng-model="newFaculty.country" ng-change="selectPhonePrefix(newFaculty.country)"
+                  required required-err-type="requiredMessage">
+                                    <option disabled value ="">Odaberi državu</option>
+                                    <option  ng-repeat = "country in countries" value ="{{country.code}}"
+                                     >{{country.name}}</option>
+                                </select>
+              </div>
+              <div class="form-group">
+                <label for="city">Grad</label>
+                <input type="text" class="form-control" id="city" ng-model="newFaculty.city" required ng-pattern="/^[A-Za-z0-9]{1,31}$/"
+                  ng-minlength="2" ng-maxlength="30" ng-pattern-err-type="invalidCity" ng-minlength-err-type="invalidCityminlength"
+                  ng-maxlength-err-type="invalidCitymaxlength" required-err-type="requiredMessage" />
+              </div>
+
+              <div class="form-group">
+                <label for="address">Adresa</label>
+                <input type="text" class="form-control" id="address" ng-model="newFaculty.address" required ng-pattern="/^[A-Za-z0-9_]{1,41}$/"
+                  ng-minlength="2" ng-maxlength="40" ng-pattern-err-type="invalidAddress" ng-minlength-err-type="invalidAddressminlength"
+                  ng-maxlength-err-type="invalidAddressmaxlength" required-err-type="requiredMessage" />
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Telefon</label>
+                <input type="text" class="form-control" id="phone" ng-model="newFaculty.phone" required ng-pattern="/^[0-9]{1,30}$/" ng-minlength="6"
+                  ng-maxlength="20" ng-pattern-err-type="invalidPhone" ng-minlength-err-type="invalidPhoneminlength" ng-maxlength-err-type="invalidPhonemaxlength"
+                  required-err-type="requiredMessage" />
+              </div>
+              <div style="text-align: center">
+                <input type="submit" value="Dodaj" class="btn btn-success" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- UPDATE FACULTY MODAL -->
+    <div class="modal fade" id="update-faculty-modal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="updateFaculty(facultyUpdate.id)">
+              <div class="form-group">
+                <strong>Ime fakulteta</strong>
+                <input type="text" class="form-control" ng-model="facultyUpdate.name" />
+              </div>
+              <div class="form-group">
+                <strong>Država</strong>
+                <select class="form-control" ng-model="facultyUpdate.country">
+                                            <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}<option>
+                                         </select>
+              </div>
+              <div class="form-group">
+                <strong>Grad</strong>
+                <input type="text" class="form-control" ng-model="facultyUpdate.city" />
+              </div class="form-group">
+              <div class="form-group">
+                <strong> Adresa</strong>
+                <input type="text" class="form-control" ng-model="facultyUpdate.address" />
+              </div>
+              <div class="form-group">
+                <strong>Telefon</strong>
+                <input type="text" class="form-control" ng-model="facultyUpdate.phone" />
+              </div>
+              <div style="text-align:center">
+                <input type="submit" value="Update" class="btn btn-info" id="close-updateform-onSubmit" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DELETE FACULTY PROMPT MODAL -->
+    <div class="modal fade" id="deletefaculty-prompt-modal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body" id="modal-delete-body">
+            <div class="alert alert-danger" id="modal-delete-danger">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <div class="modal-delete-massage">
+              <strong>Upozorenje!</strong> Dali ste sigurni da želite obrisati fakultet {{}}.
+            </div>
+            <div class="modal-button">
+              <button class="btn btn-danger" ng-click="deleteFaculty()">Obriši</button>
+            </div>
+            </div>
+          </div>
+         </div>
+      </div>
+    </div>
+    <!-- DELETE USER PROMPT MODAL -->
+    <div class="modal fade delete-prompt-modal" id="deleteuser-prompt-modal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-body" id = "modal-delete-body">
+            <div class="alert alert-danger " id = "modal-delete-danger">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-delete-massage">
+              <strong>Upozorenje!</strong> Dali ste sigurni da želite obrisati korisnika {{}}.
+            </div>
+            <div class="modal-button">
+              <button class="btn btn-danger">Obriši</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ADD USER MODAL -->
+    <div class="modal fade" id="add-user-modal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">DODAJ KORISNIKA</h4>
+          </div>
+          <div class="modal-body">
+            <form ng-submit="addUsers()">
+              <div class="form-group">
+                <label>Država</label>
+                <select class="form-control" ng-model="addUser.country" ng-change="loadCitiesByCountry(addUser.country)">
+                        <option disabled value="">Odaberi državu</option>
+                        <option ng-repeat = "country in countries" value="{{country.code}}" >{{country.name}}</option>
+                      </select>
+
+              </div>
+              <div class="form-group" ng-if="addUser.country!= null">
+                <label>Grad</label>
+                <select class="form-control" ng-model="addUser.city" ng-change="getListofFacultiesbyCoutryAndCity(addUser)">
+                          <option disabled value="">Odaberi grad</option>
+                         <option ng-repeat = "city in cities">{{city}}</option>
+                      </select>
+              </div>
+              <div class="form-group" ng-if="addUser.city!=null && facultyListByCity.length > 0">
+                <label>Fakultet</label>
+                <select class="form-control" ng-model="addUser.faculty_id">
+                          <option disabled value="">Odaberi fakultet</option>
+                          <option ng-repeat = "faculty in facultyListByCity" value="{{faculty.id}}">{{faculty.name}}</option>
+                        </select>
+              </div>
+              <div ng-if="addUser.faculty_id!=null">
+                <div class="form-group">
+                  <label>Ime</label>
+                  <input class="form-control" type="text" ng-model="addUser.first_name">
+                </div>
+                <div class="form-group">
+                  <label>Prezime</label>
+                  <input class="form-control" type="text" ng-model="addUser.last_name">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input class="form-control" type="text" ng-model="addUser.email">
+                </div>
+                <div class="form-group">
+                  <label>Šifra</label>
+                  <input class="form-control" type="password" ng-model="addUser.password">
+                </div>
+                <div style="text-align:center">
+                  <input class="btn btn-success" type="submit" value="Dodaj" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

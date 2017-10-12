@@ -123,12 +123,12 @@ angular.module('issApp')
     
   }])
 
-  .controller('superAdminController',['$scope','superAdminFacultyService','superAdminUserService',
-        function($scope,superAdminFacultyService,superAdminUserService){
+  .controller('superAdminController',['$scope','$state','superAdminFacultyService','superAdminUserService',
+        function($scope,$state,superAdminFacultyService,superAdminUserService){
 
       var facultiListindex = null;
       var deleteFacultyId = null;
-      
+      $scope.userParams = $state.params.user;
 
 
       $scope.getListofFaculties = function(){
@@ -250,7 +250,7 @@ angular.module('issApp')
                 if(user!=null){
                   auth.login(user).then(function(authenticated){
                     if(auth.role() == ROLE.superadmin){
-                            $state.go('superadmin');
+                            $state.go('superadmin',{user:auth.userObj()});
                       }
                     
                     if(auth.role() == ROLE.admin){

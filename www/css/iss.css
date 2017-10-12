@@ -62,127 +62,105 @@
   background: #43A047;
 }
 
+/** UI TEMPLATES COMMON CSS **/
+.header{
+  border-bottom: 2px solid white;
+  }
+  #superadmin-header{
+    background-color: #d9534f; /* BOOTSTRAP CRVENA*/
+  }
 
+  #admin-header{
+    background-color: #428bca; /* BOOTSTRAP PLAVA*/
+  }
+  #professor-header{
+    background-color: #5bc0de; /* BOOTSTRAP SVIJETLIJA PLAVA*/
+  }
+   #assistant-header{
+    background-color: #7c4dff; /* BOOTSTRAP PINK*/
+  }
+   #student-header{
+    background-color: #5cb85c; /* BOOTSTRAP ZELENA*/
+  }
 
-/*////////////////// SUPER ADMIN ///////////////////*/
-
-.contanier{
-
-    margin: 10px 10px 0px 10px;
-}
-#header{
-
-    background-color: rgb(66,139,202);
-    height: 50px;
-
-}
-#title{
-    width: 20%;
-    height: 50px;
-    float: left;
-    border-right: 1px solid white;
-}
-#title p{
-    padding: 10px;
-    font-size: 110%;
-
-}
-#navdropdown{
-    float: right
-}
-.dropdown button{
-    height: 50px;
-    border-radius: 0px;
-
+.header #header-title{
+  text-align: center;
+  border-right: 1px solid white;
 }
 
-.menu{
-    border-left: 2px solid #428bca;
-    border-right: 2px solid #428bca;
-    width: 10%;
-    float: left;
-}
-.content{
-    width: 90%;
-    float:right;
-
-}
-#add-faculty-button{
-    text-align: right;
-    margin: 0px 20px 0px 0px;
-}
-#delete-prompt{
-    position: absolute;
-    display:none;
-    left: 30%;
-    top: 15%;
-    z-index: 0;
-    border: 2px solid #d9534f;
-    border-radius: 5px;
-    width:40%;
-    background-color: white;
-}
-
-#update-form{
-    display:none;
-    position:absolute;
-    left:30%;
-    top:15%;
-    width: 50%;
-    z-index:0;
-    border: 2px solid #5bc0de;
-    border-radius:5px;
-    background-color:white;
-
-}
-#update-form form{
-    padding: 5px;
-}
-
-#facultyadd-form{
-    display: none;
-    position: absolute;
-    top:15%;
-    left: 25%;
-    width: 55%;
-    z-index: 0;
-    border: 2px solid #5cb85c;
-    border-radius: 5px;
-    background-color: white;
-}
-
-#facultyadd-form form{
-    margin-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-}
-#faculty-add-message{
-    padding: 10px;
-    text-align: center;
-
-}
-#users-content{
-    display: none;
-}
-
-#add-user-button{
+.header #header-menu {
   text-align: right;
-  margin: 0px 20px 0px 0px;
 }
 
-#user-add-form{
-  display: none;
-  position: absolute;
-  top:15%;
-  left: 25%;
-  width: 55%;
-  z-index: 0;
-  border: 2px solid #5cb85c;
-  border-radius: 5px;
-  background-color: white;
+.header #header-menu #dropdown-menu-button{
+  border-radius: 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 7px; /******************************* <--- BUTTON CSS HERE*********************************************************/
 }
-#user-add-form form{
+.header #header-menu p{
+  display: inline;
   padding: 5px;
+ }
+
+ .ui-menu{
+  padding: 0;
+  background-color: #222;
+  height:100vh;
+ }
+
+ .ui-menu ul li{
+  border-bottom: 1px solid gray;
+ }
+.ui-menu ul li :hover{
+  border-radius: 0px;
+  cursor: pointer;
+  background-color: #545454;
+
+  }
+ .ui-menu ul li a {
+  color: white;
+ }
+ 
+.ui-menu ul li a p {
+  display: inline;
+  margin-left: 10px;
 }
 
+.ui-content{
+  padding:5px 2px;
+  background-color:#f6f6f6;
+}
+.add-user-button{
+  margin: 0px 20px 0px 20px;
+  padding: 5px 20px;
+  border-top: 1px solid gray;
+  text-align: right;
+}
+
+#modal-delete-body{
+  padding: 0;
+
+}
+#modal-delete-danger{
+  border-radius: 0px;
+  margin: 0;
+}
+.modal-delete-massage{
+  margin-bottom: 20px;
+}
+.modal-button{
+  text-align: center;
+
+}
+.modal-button button{
+  width: 30%;
+}
+
+.modal-add-header{
+  background-color: #5cb85c;
+}
+
+.modal-update-header{
+  background-color: #5bc0de;
+}
 
