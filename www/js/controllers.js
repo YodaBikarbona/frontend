@@ -1,9 +1,11 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope','$state','adminService','courseSevice','ROLE', function($scope,$state,adminService,cS,ROLE){
+  .controller('adminController', ['$scope','$state','adminService','courseSevice','ROLE','userservice', 
+                                                          function($scope,$state,adminService,cS,ROLE,userservice){
       $scope.roles = ['profesor','asistent','student'];
       $scope.userParams = $state.params.user;
-      
+       
+
       
       var user = {
           created : '',
@@ -29,25 +31,25 @@ angular.module('issApp')
       
       $scope.addUsers = function(user){
         
-        adminService.addUsers(user,function(msg){
+        userservice.createUser(user,function(msg){
 
         });
       }
       $scope.getOneUser = function(id){
-        adminService.getOneUser(id,function(user){
+        adminService.getUserById(id,function(user){
          $scope.userUpdate = user;
         });
       }
 
       $scope.updateUser = function(user){
-        adminService.updateAccount(user);
+        userservice.updateUser(user);
         $scope.userUpdate = {};
       }
 
 
 
       $scope.deactivateAccount = function(id,role,index){
-        adminService.deactivateAccount(id);
+        userservice.deactivateAccount(id);
           
         if(role === ROLE.profesor){
         $scope.profesors[index].deactivated = !$scope.profesors[index].deactivated;
@@ -63,8 +65,9 @@ angular.module('issApp')
           user.userListIndex = index;
         }
 
-      $scope.deleteAccount = function(){
-        adminService.deleteAccount(user.id,function(message){
+      $scope.deleteUser = function(){
+        userservice.deleteUser(user.id,function(message){
+
           if(user.role_id === ROLE.profesor){
             $scope.profesors.splice(user.userListIndex,1);
           }else if(user.role_id === ROLE.asistent) {
@@ -85,21 +88,21 @@ angular.module('issApp')
       $scope.getPorfesors = function(){
         $scope.profesors = [];
        
-         adminService.getProffesors(function(profesors){
+         userservice.getProfessors(function(profesors){
             $scope.profesors = profesors;
         });
       }
 
      $scope.getAssistents = function(){
      
-      adminService.getAssistents(function(assistents){
+      userservice.getAssistants(function(assistents){
         $scope.assistents = assistents;
       });
       }
 
      $scope.getStudents = function(){
     
-      adminService.getStudents(function(students){
+        userservice.getStudents(function(students){
         $scope.students = students;
       });
     }
@@ -123,17 +126,43 @@ angular.module('issApp')
     
   }])
 
-  .controller('superAdminController',['$scope','$state','superAdminFacultyService','superAdminUserService',
-        function($scope,$state,superAdminFacultyService,superAdminUserService){
+  .controller('superAdminController',['$scope','$state','superAdminFacultyService','userservice',
+        function($scope,$state,superAdminFacultyService,userservice){
 
       var facultiListindex = null;
       var deleteFacultyId = null;
       $scope.userParams = $state.params.user;
 
+      var user = {
+          created : '',
+          deactivated:false,
+          deleted:false,
+          email:'',
+          faculty_id:null,
+          faculty_name:'',
+          first_name:'',
+          id:null,
+          index_id:null,
+          last_change_date:'',
+          last_name:'',
+          registration_date:'',
+          role:{
+              name:''
+          },
+          role_id:null,
+          status:null,
+          userListIndex:null
+      }
+
+    
+
+
+
 
       $scope.getListofFaculties = function(){
             superAdminFacultyService.getListFaculties(function(facultyList){
                 $scope.facultyList  = facultyList;
+               
               });
             }
 
@@ -190,20 +219,27 @@ angular.module('issApp')
               }
 
       $scope.getUsers = function(){
-            superAdminUserService.getUsers(function(usrList){
+            userservice.getAdmins(function(usrList){
                   $scope.usersList = usrList;
                   });
               }
 
       $scope.toogleUseractivation = function(id,index){
-            superAdminUserService.toogleUseractivation(id);
-                $scope.usersList[index].deactivated = superAdminUserService
-                            .changeUserActivationInList($scope.usersList[index].deactivated);
-                  }
+            userservice.deactivateUser(id);
+                $scope.usersList[index].deactivated = !$scope.usersList[index].deactivated;
+            
+            }
+      $scope.setUser = function(id,index){
+          user.id = id;
+          user.usersListIndex = index;
+      }
 
-      $scope.deleteUser = function(id,index){
-              superAdminUserService.deleteUser(id);
-                  $scope.usersList.splice(index,1);
+      $scope.deleteUser = function(){
+              userservice.deleteUser(user.id,function(message){
+                console.log(message.status);
+                $scope.serverMessage = message;
+              });
+                  $scope.usersList.splice(user.usersListIndex,1);
 
           }
       $scope.loadCitiesByCountry = function(country){
@@ -214,24 +250,20 @@ angular.module('issApp')
       $scope.getListofFacultiesbyCoutryAndCity = function(user){
             resetUser();
               if(user.country!=null && user.city!=null){
-                superAdminUserService.getListOfFaculties(user,function(list){
+                superAdminFacultyService.getListOfFaculties(user,function(list){
                   $scope.facultyListByCity = list;
                 });
               }}
 
 
-      var interval;
+   
       $scope.addUsers = function() {
-            superAdminUserService.addUser($scope.addUser,function(addStatus){
-              $scope.usersMsg = addStatus;
-              $scope.addUser = null;
-              interval = setInterval(clrMsg,5000);
+          angular.element('#add-user-modal').modal("hide");
+          userservice.createUser($scope.addUser,function(message){
+             $scope.serverMessage = message;
+               $scope.addUser = null;
+              
             });
-          }
-
-      function clrMsg(){
-          $scope.usersMsg = '';
-          clearInterval(interval);
           }
 
       function resetUser(){

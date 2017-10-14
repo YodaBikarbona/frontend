@@ -100,6 +100,7 @@ angular.module('issApp')
 
           callback(user);
       },function(resp){
+
       });
     }
 
@@ -151,6 +152,16 @@ angular.module('issApp')
     }
 }])
   .service('superAdminFacultyService', ['$http','API_ENDPOINT', function($http, API_ENDPOINT){
+
+    this.getListOfFaculties = function(user,callback){
+          $http({
+            url : API_ENDPOINT.url + '/country/city/faculties',
+            method : 'POST',
+            data : user
+          }).then(function(resp){
+            callback(resp.data.faculty_list);
+          },function(resp){});
+        }
 
       this.getListFaculties = function (cb) {
            $http({
@@ -226,9 +237,9 @@ angular.module('issApp')
           }
   }])
 
-  .service('superAdminUserService', ['$http','$log','API_ENDPOINT', function($http,$log,API_ENDPOINT){
+  .service('userservice',['$http','API_ENDPOINT','ROLE',function($http,API_ENDPOINT,ROLE){
 
-       this.getUsers = function(callback){
+    this.getAdmins = function(callback){
          $http({
            url : API_ENDPOINT.url + '/users',
            method : 'GET'
@@ -238,49 +249,106 @@ angular.module('issApp')
          },function(resp){});
         }
 
-        this.toogleUseractivation = function(id){
-          $http({
+    this.getProfessors = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.profesor,
+        method: 'GET'
+      }).then(function(resp){
+          callback(resp.data.user_list);
+      },
+        function(resp){
+        });
+      }
+
+    this.getAssistants = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.asistent,
+        method: 'GET'
+      }).then(function(resp){
+        callback(resp.data.user_list);
+      },
+        function(resp){
+          $log.log('ERROR');
+        });
+
+    }
+    this.getStudents = function(callback){
+      $http({
+        url: API_ENDPOINT.url+ '/users?role_id=' + ROLE.student,
+        method: 'GET'
+      }).then(function(resp){
+        callback(resp.data.user_list);
+      },
+        function(resp){});
+    }
+    
+    this.getUserById = function(id,callback){
+
+      $http({
+        url: API_ENDPOINT.url +'/users/'+id,
+        method: 'GET'
+
+      }).then(function(resp){
+          var user =   {
+                      user_id: resp.data.user_dict.id,
+                      first_name: resp.data.user_dict.first_name, 
+                      last_name: resp.data.user_dict.last_name, 
+                      role: resp.data.user_dict.role.name, 
+                      email: resp.data.user_dict.email, 
+                      password: '' 
+                  }
+           callback(user);
+      },function(resp){
+      });
+    }
+
+    this.updateUser = function(user){
+      $http({
+        url: API_ENDPOINT.url + '/users/edit',
+        method: 'POST',
+        data: user
+      }).then(function(resp){
+          console.log(resp);
+      },function(resp){
+
+      })
+    }
+    
+    this.createUser = function(user,callback){
+      $http({
+        url: API_ENDPOINT.url+'/users/add',
+        method:'POST',
+        data: user
+      }).then(function(resp){
+          callback(resp)
+        },function(resp){
+          callback(resp);
+      });
+    }
+    
+    this.deleteUser = function(id,callback){
+        $http({
+          url : API_ENDPOINT.url + '/users/'+id+'/delete',
+          method : 'DELETE',
+          }).then(function(resp){
+              callback(resp);
+          },function(resp){
+              callback(resp);
+          });
+        }
+    this.deactivateUser = function(id){
+      $http({
             url : API_ENDPOINT.url + '/users/change_activation_status',
             method : 'POST',
             data : {user_id : id}
-          }).then(function(resp){},function(resp){});
-        }
-
-        this.changeUserActivationInList = function(deactivated){
-            if(deactivated){ return false;}
-            else{return true;}
-        }
-
-        this.deleteUser = function(id){
-          $http({
-            url : API_ENDPOINT.url + '/users/'+id+'/delete',
-            method : 'DELETE',
-            }).then(function(resp){
-            },function(resp){});
-        }
-
-        this.addUser = function(user,callback){
-          $http({
-            url : API_ENDPOINT.url + '/users/add',
-            method : "POST",
-            data : user
           }).then(function(resp){
-            callback(resp.data.message);
-          },function(resp){
-            callback(resp.data.error_msg);
+            console.log(resp.data)
+            },function(resp){
+              console.log(resp.data)
           });
-        }
+    }
 
-        this.getListOfFaculties = function(user,callback){
-          $http({
-            url : API_ENDPOINT.url + '/country/city/faculties',
-            method : 'POST',
-            data : user
-          }).then(function(resp){
-            callback(resp.data.faculty_list);
-          },function(resp){});
-        }
-  }])
+}])
 
   .service('authservice', ['$http','API_ENDPOINT','$q', function($http,API_ENDPOINT,$q){
       var LOCAL_STORAGE_KEY = 'mytoken'
@@ -337,6 +405,7 @@ angular.module('issApp')
             
           }
         },function(resp){
+          console.log(resp)
             
           });
   })}

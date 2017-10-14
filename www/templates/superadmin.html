@@ -19,12 +19,12 @@
         <li ng-click="getListofFaculties()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"><i class="fa fa-university" aria-hidden="true"
                      ></i><p>Fakulteti</p></a></li>
         <li ng-click="getUsers()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2"><i class="fa fa-user" aria-hidden="true"></i><p>Korisnici</p></a></li>
-
+      
       </ul>
     </div>
     <div class="col-md-10 ui-content">
       <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
+        <div class="panel panel-default"> 
           <div id="collapse1" class="panel-collapse collapse">
             <div class="panel-body">
               <div>
@@ -61,8 +61,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="panel panel-default">
+       </div>
+        <div class="panel panel-default"> 
           <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
               <div>
@@ -92,7 +92,7 @@
                       <td><button class="btn btn-warning btn-xs" ng-click="toogleUseractivation(user.id,$index)">
                                 <i class="fa fa-ban" aria-hidden="true" ng-if = "!user.deactivated"></i><i class="fa fa-check-circle-o" aria-hidden="true" ng-if = "user.deactivated"></i>
                             </button>
-                        <button class="btn btn-danger btn-xs" data-toggle ="modal" data-target="#deleteuser-prompt-modal" ng-click="deleteUser(user.id,$index)">
+                        <button class="btn btn-danger btn-xs" data-toggle ="modal" data-target="#deleteuser-prompt-modal" ng-click="setUser(user.id,$index)">
                                         <i class="fa fa-times" aria-hidden="true"></i>
                                 </button></td>
                     </tr>
@@ -104,7 +104,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> 
         <!-- NEW PANNEL HERE -->
       </div>
     </div>
@@ -158,12 +158,12 @@
                   required-err-type="requiredMessage" />
               </div>
               <div style="text-align: center">
-                <input type="submit" value="Dodaj" class="btn btn-success" />
-              </div>
+                <input type="submit" class="btn btn-success" value="Dodaj" data-dismiss="modal" data-toggle="modal" data-target ="#server-msg-modal"  />
+              </div>                    
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
           </div>
         </div>
       </div>
@@ -175,7 +175,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+            <h4 class="modal-title">Promjeni podatke o fakultetu</h4>
           </div>
           <div class="modal-body">
             <form ng-submit="updateFaculty(facultyUpdate.id)">
@@ -213,45 +213,48 @@
       </div>
     </div>
     <!-- DELETE FACULTY PROMPT MODAL -->
-    <div class="modal fade" id="deletefaculty-prompt-modal" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-body" id="modal-delete-body">
-            <div class="alert alert-danger" id="modal-delete-danger">
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <div class="modal-delete-massage">
-              <strong>Upozorenje!</strong> Dali ste sigurni da želite obrisati fakultet {{}}.
-            </div>
-            <div class="modal-button">
-              <button class="btn btn-danger" ng-click="deleteFaculty()">Obriši</button>
-            </div>
-            </div>
+        <div class="modal fade" id="deletefaculty-prompt-modal" role="dialog">
+              <div class="modal-dialog modal-sm">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header alert alert-danger">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Obriši fakultet</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Dali ste sigurni da želite obrisati fakultet?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deleteFaculty()">Obriši</button>
+                  </div>
+                </div>
+              </div>
           </div>
-         </div>
-      </div>
-    </div>
+
+           
     <!-- DELETE USER PROMPT MODAL -->
-    <div class="modal fade delete-prompt-modal" id="deleteuser-prompt-modal" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-body" id = "modal-delete-body">
-            <div class="alert alert-danger " id = "modal-delete-danger">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <div class="modal-delete-massage">
-              <strong>Upozorenje!</strong> Dali ste sigurni da želite obrisati korisnika {{}}.
-            </div>
-            <div class="modal-button">
-              <button class="btn btn-danger">Obriši</button>
-            </div>
-            </div>
+          <div class="modal fade" id="deleteuser-prompt-modal" role="dialog">
+              <div class="modal-dialog modal-sm">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header alert alert-danger">
+                    
+                    <h4 class="modal-title">Obriši korisnika</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Dali ste sigurni da želite obrisati korisnika?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle = "modal" data-target="#server-msg-modal" ng-click="deleteUser()">Obriši</button>
+                  </div>
+                </div>
+              </div>
           </div>
-        </div>
-      </div>
-    </div>
+
     <!-- ADD USER MODAL -->
     <div class="modal fade" id="add-user-modal" role="dialog">
       <div class="modal-dialog">
@@ -304,7 +307,7 @@
                   <input class="form-control" type="password" ng-model="addUser.password">
                 </div>
                 <div style="text-align:center">
-                  <input class="btn btn-success" type="submit" value="Dodaj" />
+                  <input type = "submit" value="Dodaj" class="btn btn-success" data-toggle="modal" data-target="#server-msg-modal" />
                 </div>
               </div>
             </form>
@@ -315,6 +318,6 @@
         </div>
       </div>
     </div>
+        <div ng-include="'templates/modals/servermsessage.html'" ></div>
   </div>
-</div>
 </div>
