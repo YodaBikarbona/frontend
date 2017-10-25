@@ -36,7 +36,6 @@ angular.module('issApp')
         subjectService.getSubjects(id,function(subjects){
           setCourseId(id);
           $scope.subjects = subjects;
-          console.log(subjects)
         });
       }
       $scope.addSubject = function(subjectName){
