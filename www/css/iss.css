@@ -116,6 +116,11 @@
   cursor: pointer;
   /*background-color: #545454; */
   }
+.nav>li>a.active,
+.nav>li>a:hover,
+.nav>li>a:focus {
+   background-color: #545454;
+}
  .ui-menu ul li a {
   color: white;
  }

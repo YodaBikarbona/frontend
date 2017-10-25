@@ -15,6 +15,7 @@ angular.module('issApp')
     }
 
     this.addSubject = function(subject){
+      console.log(subject);
       $http({
         url: apiUrl.url + '/faculty/course/faculty_courses/add',
         method: 'POST',
