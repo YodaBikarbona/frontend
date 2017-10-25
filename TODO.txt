@@ -1,0 +1,33 @@
+DODAVANJE PREDMETA
+POST
+url: /faculty/course/faculty_courses/add
+data:{course.id,course.name};
+BRISANJE PREDMETA
+DELETE
+url :/faculty/course/'+course_id+'/faculty_courses/'+id+'/delete
+DOHVACANJE PREDMETA
+GET
+url :/faculty/course/'+course_id+'/faculty_courses/
+JSON PREMETA
+{
+    "status": "OK",
+    "faculty_courses": [
+        {
+            "faculty_id": 1,
+            "course_name": "Matematika 1",
+            "created": "10/14/2017 16:20:27",
+            "deleted": false,
+            "last_change_date": "2017-10-14T16:29:09",
+            "course_id": 2,
+            "id": 1
+        }
+    ],
+    "message": "Faculty course list",
+    "server_time": "2017-10-14T16:36:50"
+}
+DODJELJIVANJE PROFESORA PREDMETU
+POST
+url:/faculty/course/faculty_courses/professors/add
+{user_id:
+facultycourse_id:}
+poslat id od profe/asistenta i predmeta

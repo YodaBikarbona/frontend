@@ -1,5 +1,44 @@
 angular.module('issApp')
 
+  .service('subjectService', ['$http','API_ENDPOINT', function($http,apiUrl){
+    
+    this.getSubjects = function(id,callback){
+      $http({
+        url: apiUrl.url + '/faculty/course/'+id+'/faculty_courses',
+        method: 'GET'
+      }
+      ).then(function(resp){
+        callback(resp.data.faculty_courses);
+      }
+        ).catch(function(resp){}
+        );
+    }
+
+    this.addSubject = function(subject){
+      $http({
+        url: apiUrl.url + '/faculty/course/faculty_courses/add',
+        method: 'POST',
+        data: subject
+      }
+      ).then(function(resp){
+        console.log(resp);
+      }
+      ).catch(function(resp){
+        console.log(resp);
+      });
+    }
+
+    this.deleteSubject = function(id,course_id){
+      $http({
+        url: apiUrl.url + '/faculty/course/'+course_id+'/faculty_courses/'+id+'/delete',
+        method: 'DELETE'
+        }
+        ).then(function(resp){}
+        ).catch(function(resp){})
+    }
+    
+
+  }])
   .service('courseSevice', ['$http','API_ENDPOINT',function($http,apiUrl){
     
     this.getCourses = function(callback){

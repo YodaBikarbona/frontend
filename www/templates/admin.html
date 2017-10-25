@@ -17,13 +17,21 @@
 
   <div class="row">
     <div class="col-md-2 ui-menu">
-      <ul class="nav nav-pills nav-stacked">
+     <ul class="nav nav-pills nav-stacked">
         <li ng-click="getPorfesors()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse1"><i class="fa fa-user" aria-hidden="true"></i><p>Profesori</p></a></li>
         <li ng-click="getAssistents()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse2"><i class="fa fa-user" aria-hidden="true"></i><p>Asistenti</p></a></li>
         <li ng-click="getStudents()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse3"><i class="fa fa-graduation-cap" aria-hidden="true"></i><p>Studenti</p></a></li>
-        <li ng-click="getCourses()"><a data-toggle="collapse" data-parent="#accordion" data-target="#collapse4"><i class="fa fa-book" aria-hidden="true"></i><p>Smjerovi</p></a></li>
-      </ul>
-    </div>
+        <li ng-click="getCourses()"><a data-toggle="collapse" data-target="#test"><i class="fa fa-book" aria-hidden="true"></i><p>Predmeti</p><span class="caret"></span></a>
+          <div class="ui-submenu">
+              <ul class="nav nav-pills nav-stacked collapse" id="test">
+                <li ng-repeat="course in courses" ng-click="getSubjects(course.id)"><a data-toggle="modal" data-target="#subjects"><p>{{course.name}}</p></a></li>
+              </ul>
+          </div>
+        </li>
+        <li ng-click="getCourses()"><a data-toggle = "collapse" data-parent = "#accordion" data-target = "#collapse4"><p>Sraćenice<p></a></li>
+
+    </ul>
+</div>
     <div class="col-md-10 ui-content">
       <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -182,31 +190,88 @@
           <div id="collapse4" class="panel-collapse collapse">
             <div class="panel-body">
               <div>
-                <h1>COURSES</h1>
-                <div style="padding:10px; width:200px;">Smjer </div>
-                <div style="padding:10px; width:200px; border:1px solid black" ng-repeat="course in courses">{{course.name}}
-                  <a style="cursor:pointer" ng-click="getAbbreviations(course.id,$index)">{{course.abbreviation_number}}</a>
-                  <div style="padding:10px; width:150px; border:1px solid black" ng-if="index == $index && showAbbreviations">
-                    <p style="padding:2px; border-bottom:1px solid gray;">Skracenice</p>
-                    <div p style="padding:2px; border-bottom:1px solid gray;" ng-repeat="abbreviation in abbreviations">{{abbreviation.abbreviation}}</div>
-                    <div style="width:120px">
-                      <form ng-submit="addAbbreviation(course.id ,abbr)">
-                        <div class="form-group">
-                          <label>Skracenica</label>
-                          <input type="text" class="form-control" ng-model="abbr">
-                        </div>
-                        <div>
-                          <input class="btn btn-info" type="submit" value="Dodaj Skracenicu" />
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
+                <ul class="list-group">
+                  <li class="list-group-item" ng-repeat="course in courses">{{course.name}} <span class="badge" style="cursor:pointer" data-toggle="modal" data-target="#addAbbreviation" ng-click="getAbbreviations(course.id,$index)">
+                  {{course.abbreviation_number}}</span></li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- PREDMETI MODAL -->
+        <div class="modal fade" id="subjects" role="dialog">
+                  <div class="modal-dialog modal-lg">
+                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div>
+                        <table class="table">
+                          <tr>
+                            <th>Predmet</th>
+                            <th>Izbriši</th>
+                          </tr>
+                          <tr ng-repeat="subject in subjects">
+                            <td>{{subject.course_name}}</td>
+                            <td><button class="btn btn-danger btn-xs" ng-click="deleteSubject(subject.id,subject.course_id)"><i class="fa fa-times" aria-hidden="true"></button></td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div>
+                        <form ng-submit="addSubject(subjectName)">
+                          <input type="text" ng-model = "subjectName">
+                          <input type="submit" value="Dodaj predmet">
+                        </form>
+
+
+                      </div>
+                      </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+
+             <!--SKRAĆENICE MODAL -->
+                <div class="modal fade" id="addAbbreviation" role="dialog">
+                          <div class="modal-dialog modal-sm">
+                          
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Skraćenice</h4>
+                              </div>
+                              <div class="modal-body">
+                                <ul class="list-group">
+                                  <li class="list-group-item" ng-repeat="abbreviation in abbreviations">{{abbreviation.abbreviation}}</li>
+                                </ul>
+
+                                <form ng-submit="addAbbreviation(abbr)">
+                                  <div class="form-group">
+                                    <label>Dodaj Skraćeicu</label>
+                                    <input type="text" class="form-control" ng-model="abbr">
+                                  </div>
+                                <div>
+                                  <input class="btn btn-info" type="submit" value="Dodaj Skracenicu" />
+                                </div>
+                             </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+        
 
       <!-- ADD USER MODAL -->
       <div class="modal fade" id="add-user-modal" role="dialog">

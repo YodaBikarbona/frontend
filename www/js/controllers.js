@@ -1,12 +1,10 @@
 angular.module('issApp')
 
-  .controller('adminController', ['$scope','$state','adminService','courseSevice','ROLE','userservice', 
-                                                          function($scope,$state,adminService,cS,ROLE,userservice){
+  .controller('adminController', ['$scope','$state','adminService','courseSevice','ROLE','userservice','subjectService',
+                                                          function($scope,$state,adminService,cS,ROLE,userservice,subjectService){
       $scope.roles = ['profesor','asistent','student'];
       $scope.userParams = $state.params.user;
        
-
-      
       var user = {
           created : '',
           deactivated:false,
@@ -26,6 +24,31 @@ angular.module('issApp')
           role_id:null,
           status:null,
           userListIndex:null
+      }
+      var course_id = undefined;
+
+      function setCourseId(id){
+        course_id = id;
+      }
+
+
+      $scope.getSubjects = function(id){
+        subjectService.getSubjects(id,function(subjects){
+          setCourseId(id);
+          $scope.subjects = subjects;
+          console.log(subjects)
+        });
+      }
+      $scope.addSubject = function(subjectName){
+        var subject = {
+          course_id: course_id,
+          course_name: subjectName
+        }
+       subjectService.addSubject(subject);
+      }
+      $scope.deleteSubject = function(id,course_id){
+        subjectService.deleteSubject(id,course_id);
+
       }
 
       
@@ -82,6 +105,7 @@ angular.module('issApp')
       $scope.getCourses = function(){
         cS.getCourses(function(course){
           $scope.courses = course;
+
         });
       }
 
@@ -106,21 +130,22 @@ angular.module('issApp')
         $scope.students = students;
       });
     }
-
+    var listin;
     $scope.getAbbreviations = function(course_id,index){
-      $scope.index = index;
-      
-      
-      if(course_id!= null){
-      
+      listin = index;
       cS.getAbbreviationForCourse(course_id,function(abbreviations){
         $scope.abbreviations = abbreviations;
+        setCourseId(course_id);
       });
     }
-    }
     
-    $scope.addAbbreviation = function(course_id ,abbr){
-      cS.addAbbriviation(course_id,abbr);
+    
+    $scope.addAbbreviation = function(abbr){
+      var id = course_id;
+      cS.addAbbriviation(id,abbr);
+      $scope.abbreviations.push({abbreviation:abbr});
+      $scope.courses[listin].abbreviation_number+=1;
+      course_id = null;
     }
     
     

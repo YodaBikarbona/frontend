@@ -114,17 +114,30 @@
 .ui-menu ul li :hover{
   border-radius: 0px;
   cursor: pointer;
-  background-color: #545454;
-
+  /*background-color: #545454; */
   }
  .ui-menu ul li a {
   color: white;
  }
+ .ui-menu ul li span {
+  margin-left: 10px;
+ }
+
  
 .ui-menu ul li a p {
   display: inline;
   margin-left: 10px;
 }
+
+.ui-submenu ul li{
+  border:  none;
+  
+}
+.ui-submenu ul{
+  margin-left:20px;
+  
+}
+
 
 .ui-content{
   height: 100vh;
@@ -164,4 +177,5 @@
 .modal-update-header{
   background-color: #5bc0de;
 }
+
 
