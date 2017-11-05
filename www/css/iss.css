@@ -1,0 +1,186 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+*{
+  margin: 0;
+  padding: 0;
+}
+.mainview{
+
+}
+
+
+/* LOGIN FORM */
+.login-page {
+  background: #76b852;
+  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 8% 0 0;
+  margin: auto;
+  height: 700px;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+
+/** UI TEMPLATES COMMON CSS **/
+.header{
+  border-bottom: 2px solid white;
+  }
+  #superadmin-header{
+    background-color: #d9534f; /* BOOTSTRAP CRVENA*/
+  }
+
+  #admin-header{
+    background-color: #428bca; /* BOOTSTRAP PLAVA*/
+  }
+  #professor-header{
+    background-color: #5bc0de; /* BOOTSTRAP SVIJETLIJA PLAVA*/
+  }
+   #assistant-header{
+    background-color: #7c4dff; /* BOOTSTRAP PINK*/
+  }
+   #student-header{
+    background-color: #5cb85c; /* BOOTSTRAP ZELENA*/
+  }
+
+.header #header-title{
+  text-align: center;
+  border-right: 1px solid white;
+}
+
+.header #header-menu {
+  text-align: right;
+}
+
+.header #header-menu #dropdown-menu-button{
+  border-radius: 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 7px; /******************************* <--- BUTTON CSS HERE*********************************************************/
+}
+.header #header-menu p{
+  display: inline;
+  padding: 5px;
+ }
+
+ .ui-menu{
+  padding: 0;
+  background-color: #222;
+  height:100vh;
+ }
+
+ .ui-menu ul li{
+  border-bottom: 1px solid gray;
+ }
+.ui-menu ul li :hover{
+  border-radius: 0px;
+  cursor: pointer;
+  /*background-color: #545454; */
+  }
+.nav>li>a.active,
+.nav>li>a:hover,
+.nav>li>a:focus {
+   background-color: #545454;
+}
+ .ui-menu ul li a {
+  color: white;
+ }
+ .ui-menu ul li span {
+  margin-left: 10px;
+ }
+
+ 
+.ui-menu ul li a p {
+  display: inline;
+  margin-left: 10px;
+}
+
+.ui-submenu ul li{
+  border:  none;
+  
+}
+.ui-submenu ul{
+  margin-left:20px;
+  
+}
+
+
+.ui-content{
+  height: 100vh;
+  padding:5px 2px;
+  background-color:#f6f6f6;
+}
+.add-user-button{
+  margin: 0px 20px 0px 20px;
+  padding: 5px 20px;
+  border-top: 1px solid gray;
+  text-align: right;
+}
+
+#modal-delete-body{
+  padding: 0;
+
+}
+#modal-delete-danger{
+  border-radius: 0px;
+  margin: 0;
+}
+.modal-delete-massage{
+  margin-bottom: 20px;
+}
+.modal-button{
+  text-align: center;
+
+}
+.modal-button button{
+  width: 30%;
+}
+
+.modal-add-header{
+  background-color: #5cb85c;
+}
+
+.modal-update-header{
+  background-color: #5bc0de;
+}
+
+
