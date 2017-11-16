@@ -67,8 +67,24 @@ angular.module('issApp', ['ui.router','jcs-autoValidate','ngAnimate'])
 .run(function($transitions,$state,authservice,ROLE){
     $transitions.onStart({ to:'*'},function(){
       if(!authservice.isAuthenticated()){
-       // $state.go('login');
-      }});
+        $state.go('login');
+      }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.superadmin){
+        $state.go('superadmin',{user:authservice.userObj()});
+       }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.admin){
+        $state.go('admin',{user:authservice.userObj()});
+       }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.professor){
+        $state.go('professor',{user:authservice.userObj()});
+       }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.assistant){
+        $state.go('assistant',{user:authservice.userObj()});
+       }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.student){
+        $state.go('student',{user:authservice.userObj()});
+       }
+     });
     
     
   })
