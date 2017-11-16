@@ -65,23 +65,25 @@ angular.module('issApp', ['ui.router','jcs-autoValidate','ngAnimate'])
 }])
 
 .run(function($transitions,$state,authservice,ROLE){
+    
     $transitions.onStart({ to:'*'},function(){
+      
       if(!authservice.isAuthenticated()){
         $state.go('login');
       }
-       else if(authservice.isAuthenticated() && authservice.role() == ROLE.superadmin){
+       else if((authservice.isAuthenticated() && authservice.role() == ROLE.superadmin) || $state.current.name == 'superadmin'){
         $state.go('superadmin',{user:authservice.userObj()});
-       }
-       else if(authservice.isAuthenticated() && authservice.role() == ROLE.admin){
+      }
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.admin || $state.current.name == 'admin'){
         $state.go('admin',{user:authservice.userObj()});
        }
-       else if(authservice.isAuthenticated() && authservice.role() == ROLE.professor){
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.professor || $state.current.name == 'professor'){
         $state.go('professor',{user:authservice.userObj()});
        }
-       else if(authservice.isAuthenticated() && authservice.role() == ROLE.assistant){
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.assistant || $state.current.name == 'assistant'){
         $state.go('assistant',{user:authservice.userObj()});
        }
-       else if(authservice.isAuthenticated() && authservice.role() == ROLE.student){
+       else if(authservice.isAuthenticated() && authservice.role() == ROLE.student || $state.current.name == 'student'){
         $state.go('student',{user:authservice.userObj()});
        }
      });
